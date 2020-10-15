@@ -185,7 +185,6 @@ specification version 2.0 into your schema, use the `allOf` keyword like this:
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "mycustomobject",
-    ...
     "type": "object",
     "allOf": [
         {
@@ -195,9 +194,7 @@ specification version 2.0 into your schema, use the `allOf` keyword like this:
             "properties": {
                 "myCustomProperty1": {
                     "type": "string",
-                    ...
                 },
-                ...
             }
         }
     ]
