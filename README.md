@@ -193,8 +193,8 @@ specification version 2.0 into your schema, use the `allOf` keyword like this:
         {
             "properties": {
                 "myCustomProperty1": {
-                    "type": "string",
-                },
+                    "type": "string"
+                }
             }
         }
     ]
