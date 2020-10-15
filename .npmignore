@@ -1,0 +1,10 @@
+# Ignore the following files when publishing package to npm
+
+.editorconfig
+.gitignore
+
+# GitHub related stuff
+/.github/
+
+# Release related scripts
+.release-it.js

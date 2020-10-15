@@ -1,0 +1,63 @@
+{
+    "name": "vda-5050-cli",
+    "version": "2.0.0",
+    "description": "Command line interface for developing VDA 5050 clients",
+    "homepage": "https://github.com/coatyio/vda-5050-cli.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/coatyio/vda-5050-cli.js"
+    },
+    "readme": "README.md",
+    "bin": {
+        "vda-5050": "./bin/vda-5050"
+    },
+    "scripts": {
+        "release:prompt": "node -e \"require('./.release-it.js').promptReleaseNotes()\"",
+        "release:version": "npm run release:prompt && release-it --increment",
+        "release:dry": "npm run release:prompt && release-it --dry-run",
+        "release": "npm run release:prompt && release-it",
+        "release:ci": "release-it --ci"
+    },
+    "keywords": [
+        "VDMA",
+        "VDA",
+        "5050",
+        "cli",
+        "broker",
+        "MQTT",
+        "JSON",
+        "schema",
+        "javascript",
+        "Node.js"
+    ],
+    "author": "Siemens AG",
+    "license": "MIT",
+    "maintainers": [
+        {
+            "name": "Hubertus Hohl",
+            "email": "hubertus.hohl@siemens.com"
+        },
+        {
+            "name": "Markus Sauer",
+            "email": "markussauer@siemens.com"
+        }
+    ],
+    "bugs": {
+        "url": "https://github.com/coatyio/vda-5050-cli.js/issues"
+    },
+    "dependencies": {
+        "aedes-cli": "^0.4.2",
+        "fast-glob": "^3.2.4",
+        "quicktype-core": "^6.0.69",
+        "yargs": "^16.0.3"
+    },
+    "devDependencies": {
+        "@release-it/conventional-changelog": "^2.0.0",
+        "@types/node": "^14.11.8",
+        "readline-sync": "^1.4.10",
+        "release-it": "^14.1.0"
+    },
+    "engines": {
+        "node": ">=10.0.0"
+    }
+}

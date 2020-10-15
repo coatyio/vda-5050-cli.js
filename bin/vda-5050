@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+/*! Copyright (c) 2020 Siemens AG. Licensed under the MIT License. */
+
+// ENSURE THAT THIS FILE HAS UNIX STYLE LINE ENDINGS
+
+require("../lib/cli");
