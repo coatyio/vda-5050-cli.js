@@ -1,1 +1,5 @@
 # Changelog
+
+# 2.0.0 (2020-10-15)
+
+Initial release.
