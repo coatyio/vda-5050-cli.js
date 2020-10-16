@@ -18,17 +18,17 @@
 
 This package provides a command line interface (CLI) with tools useful for
 developing client applications based on [VDA 5050](https://www.vda.de/)
-"Interface for the communication between automated guided vehicles (AGV) and a
-master control":
+specification "Interface for the communication between automated guided vehicles
+(AGV) and a master control":
 
 * Start an MQTT broker for development testing (not intended for use in a
   production environment).
 * Create type definitions for various programming languages from predefined VDA
   5050 JSON schemas or from your custom schemas. Useful for defining VDA 5050
   (extension) object types in your application.
-* Export VDA 5050 JSON schemas for a specific VDA 5050 specification version. To
-  be used in your client application, e.g. by a code generator tool that creates
-  code for validating VDA 5050 topic payloads before publishing or upon receipt.
+* Export JSON schemas for a specific VDA 5050 specification version. To be used
+  in your application, e.g. by a code generator tool that creates code for
+  validating VDA 5050 topic payloads before publishing or upon receipt.
 
 The CLI can be used independently of or in combination with the
 [vda-5050](https://www.npmjs.com/package/vda-5050) npm package, a
@@ -38,7 +38,7 @@ library for implementing VDA 5050 clients in TypeScript/JavaScript.
 
 Ensure that [Node.js](https://nodejs.org) version 10 or newer is installed.
 
-Install the latest package version globally as follows:
+Install the latest stable version globally:
 
 ```sh
 npm install -g vda-5050-cli
