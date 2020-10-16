@@ -8,3 +8,4 @@
 
 # Release related scripts
 .release-it.js
+CHANGELOG.md
