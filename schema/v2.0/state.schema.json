@@ -339,12 +339,12 @@
                                     "FATAL"
                                 ]
                             }
-                        }
-                    },
-                    "required": [
-                        "errorType",
-                        "errorLevel"
-                    ]
+                        },
+                        "required": [
+                            "errorType",
+                            "errorLevel"
+                        ]
+                    }
                 },
                 "information": {
                     "type": "array",
@@ -394,12 +394,12 @@
                                     "DEBUG"
                                 ]
                             }
-                        }
-                    },
-                    "required": [
-                        "infoType",
-                        "infoLevel"
-                    ]
+                        },
+                        "required": [
+                            "infoType",
+                            "infoLevel"
+                        ]
+                    }
                 },
                 "safetyState": {
                     "type": "object",
