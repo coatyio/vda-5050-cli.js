@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.4](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.3...v2.0.4) (2020-10-28)
+
+This patch release turns off automatic type inference for format-annotated JSON schema types
+and makes type inference configurable.
+
+### Bug Fixes
+
+* **schema:** turn off automatic type inference for format-annotated types such as date-time and make inference configurable ([84c4340](https://github.com/coatyio/vda-5050-cli.js/commit/84c43402ff872776af4b5e9426b87ed41106409a))
+
 ## [2.0.3](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.2...v2.0.3) (2020-10-28)
 
 This patch release imposes additional validation restrictions on VDA 5050 schemas.
