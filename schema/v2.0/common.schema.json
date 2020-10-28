@@ -16,6 +16,7 @@
                 "timestamp": {
                     "title": "timestamp",
                     "type": "string",
+                    "format": "date-time",
                     "description": "Timestamp (ISO8601, UTC); YYYY-MM-DDTHH:mm:ss.ssZ; e.g. 2017-04-15T11:40:03.12Z",
                     "examples": [
                         "2017-04-15T11:40:03.12Z"
@@ -128,7 +129,7 @@
                     "minimum": 0
                 },
                 "allowedDeviationTheta": {
-                    "title": "allowedDeviationXy",
+                    "title": "allowedDeviationTheta",
                     "type": "number",
                     "minimum": 0,
                     "maximum": 3.141592654,
