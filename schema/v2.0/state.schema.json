@@ -18,6 +18,8 @@
                 },
                 "orderUpdateId": {
                     "type": "integer",
+                    "minimum": 0,
+                    "maximum": 4294967296,
                     "description": "Order Update Identification to identify that an order update has been accepted by the AGV. 0 if no previous orderUpdateId is available."
                 },
                 "zoneSetId": {
@@ -30,6 +32,8 @@
                 },
                 "lastNodeSequenceId": {
                     "type": "integer",
+                    "minimum": 0,
+                    "maximum": 4294967296,
                     "description": "sequenceId of the last reached node or, if the AGV is currently on a node, sequenceId of current node.\n0 if no lastNodeSequenceId is available. "
                 },
                 "driving": {
