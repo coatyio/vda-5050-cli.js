@@ -68,7 +68,7 @@
                             "released": {
                                 "type": "boolean",
                                 "title": "released",
-                                "description": "If true, the edge is part of the base plan. If false, the edge is part of the horizon plan."
+                                "description": "If true, the node is part of the base plan. If false, the node is part of the horizon plan."
                             },
                             "nodePosition": {
                                 "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/nodePosition",
