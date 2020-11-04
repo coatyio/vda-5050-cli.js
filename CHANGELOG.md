@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.5](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.4...v2.0.5) (2020-11-04)
+
+This patch release corrects and improves VDA 5050 schema definitions.
+
+### Bug Fixes
+
+* **schema:** add proper type and range restrictions to batteryState properties and update descriptions ([168f010](https://github.com/coatyio/vda-5050-cli.js/commit/168f0107fd16cbf6e5141f8a210dc1ad6199b78e))
+* **schema:** add separators to enum field definitions for better readability in eStop description ([0d42013](https://github.com/coatyio/vda-5050-cli.js/commit/0d42013244db49b84caeb15b9fe3f0422fcc4694))
+* **schema:** add type restrictions to orderUpdateId and lastNodeSequenceId in state schema ([6877364](https://github.com/coatyio/vda-5050-cli.js/commit/6877364b29cfc84cc17b797b060cd3dcb23fc36b))
+* **schema:** correct description of node.released property in order schema ([cc5f581](https://github.com/coatyio/vda-5050-cli.js/commit/cc5f581a67a51a4b2956bf7d86e4107de1bc3845))
+
 ## [2.0.4](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.3...v2.0.4) (2020-10-28)
 
 This patch release turns off automatic type inference for format-annotated JSON schema types
