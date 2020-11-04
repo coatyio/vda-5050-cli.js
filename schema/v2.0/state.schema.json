@@ -262,27 +262,31 @@
                 "batteryState": {
                     "type": "object",
                     "title": "batteryState",
-                    "description": "All information relating to the battery.",
+                    "description": "Contains all battery-related information.",
                     "properties": {
                         "batteryCharge": {
                             "type": "number",
-                            "description": "State of Charge:\nIf AGV only provides values for good or bad battery levels, these will be indicated as 20% (bad) and 80% (good)."
+                            "description": "State of Charge in percent as a float value:\nIf AGV only provides values for good or bad battery levels, these will be indicated as 20% (bad) and 80% (good)."
                         },
                         "batteryVoltage": {
                             "type": "number",
                             "description": "Battery voltage"
                         },
                         "batteryHealth": {
-                            "type": "number",
-                            "description": "State of health in percent."
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "State of health in percent as an integer within range [0..100]"
                         },
                         "charging": {
                             "type": "boolean",
-                            "description": "If true: Charging in progress."
+                            "description": "If true: Charging in progress. If false: AGV is currently not charging."
                         },
                         "reach": {
-                            "type": "number",
-                            "description": "estimated reach with actual State of Charge"
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295,
+                            "description": "Estimated reach with current State of Charge (in meter as uint32)"
                         }
                     },
                     "required": [
