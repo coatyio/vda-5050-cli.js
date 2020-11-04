@@ -408,7 +408,7 @@
                     "properties": {
                         "eStop": {
                             "type": "string",
-                            "description": "Enum {autoAck, manual, remote, none}\nAcknowledge-Type of eStop: autoAck: auto-acknowledgeable e-stop is activated e.g. by bumper or protective field  manual: e-stop has to be acknowledged manually at the vehicle  remote: facility e-stop has to be acknowledged remotely none: no e-stop activated.",
+                            "description": "Enum {autoAck, manual, remote, none}\nAcknowledge-Type of eStop: autoAck: auto-acknowledgeable e-stop is activated e.g. by bumper or protective field. manual: e-stop has to be acknowledged manually at the vehicle. remote: facility e-stop has to be acknowledged remotely. none: no e-stop activated.",
                             "enum": [
                                 "autoAck",
                                 "manual",
