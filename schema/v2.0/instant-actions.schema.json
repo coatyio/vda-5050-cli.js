@@ -51,7 +51,10 @@
                         }
                     }
                 }
-            }
+            },
+            "required": [
+                "instantActions"
+            ]
         }
     ]
 }
