@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.6](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.5...v2.0.6) (2020-11-11)
+
+This patch release corrects the instantActions schema definition.
+
+### Bug Fixes
+
+* **schema:** define instantActions as required property in instantActions schema ([6c1f465](https://github.com/coatyio/vda-5050-cli.js/commit/6c1f4653c2ca6e95f2d9fd91b4c3161ae67a0371))
+
 ## [2.0.5](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.4...v2.0.5) (2020-11-04)
 
 This patch release corrects and improves VDA 5050 schema definitions.
