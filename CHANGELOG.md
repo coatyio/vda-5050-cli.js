@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.7](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.6...v2.0.7) (2020-12-21)
+
+This patch release provides a common schema for instant, node, and edge actions.
+
+### Bug Fixes
+
+* **schema:** correct description properties; provide common schema for instant, node, and edge actions ([395a8e1](https://github.com/coatyio/vda-5050-cli.js/commit/395a8e1c099b46ad85540b5a6b1c9a72ef0a76b3))
+
 ## [2.0.6](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.5...v2.0.6) (2020-11-11)
 
 This patch release corrects the instantActions schema definition.
