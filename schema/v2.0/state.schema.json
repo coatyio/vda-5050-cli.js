@@ -34,11 +34,11 @@
                     "type": "integer",
                     "minimum": 0,
                     "maximum": 4294967296,
-                    "description": "sequenceId of the last reached node or, if the AGV is currently on a node, sequenceId of current node.\n0 if no lastNodeSequenceId is available. "
+                    "description": "sequenceId of the last reached node or, if the AGV is currently on a node, sequenceId of current node.\n0 if no lastNodeSequenceId is available."
                 },
                 "driving": {
                     "type": "boolean",
-                    "description": "True: indicates that the AGV is driving and/or rotating. Other movements of the AGV (e.g. lift movements) are not included here.\nFalse: indicates that the AGV is neither driving nor rotating "
+                    "description": "True: indicates that the AGV is driving and/or rotating. Other movements of the AGV (e.g. lift movements) are not included here.\nFalse: indicates that the AGV is neither driving nor rotating"
                 },
                 "paused": {
                     "type": "boolean",
@@ -46,11 +46,11 @@
                 },
                 "newBaseRequest": {
                     "type": "boolean",
-                    "description": "True: AGV is almost at the end of the base and will reduce speed if no new base is transmitted. Trigger for MC to send ne base\nFalse: no base update required "
+                    "description": "True: AGV is almost at the end of the base and will reduce speed if no new base is transmitted. Trigger for MC to send ne base\nFalse: no base update required"
                 },
                 "distanceSinceLastNode": {
                     "type": "number",
-                    "description": "Used by line guided vehicles to indicate the distance it has been driving past the â€žlastNodeIdâ€œ.\nDistance is in meters"
+                    "description": "Used by line guided vehicles to indicate the distance it has been driving past the lastNodeId.\nDistance is in meters"
                 },
                 "operatingMode": {
                     "type": "string",
@@ -84,7 +84,7 @@
                             },
                             "nodePosition": {
                                 "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/nodePosition",
-                                "description": "Node position. The object is defined in chapter 6.6. Optional: master control has this information. Can be sent additionally, e. g. for debugging purposes."
+                                "description": "Node position. The object is defined in chapter 6.6. Optional: master control has this information. Can be sent additionally, e.g. for debugging purposes."
                             },
                             "released": {
                                 "type": "boolean",
@@ -221,7 +221,7 @@
                 },
                 "actionStates": {
                     "type": "array",
-                    "description": "Contains a list of the current actions and the actions which are yet to be finished. This may include actions from previous nodes that are still in progress\nWhen an action is completed, an updated state message is published with actionStatus set to finished and if applicable with the corresponding resultDescription. The actionStates are kept until a new order is received.",
+                    "description": "Contains a list of the current actions and the actions which are yet to be finished. This may include actions from previous nodes that are still in progress.\nWhen an action is completed, an updated state message is published with actionStatus set to finished and if applicable with the corresponding resultDescription. The actionStates are kept until a new order is received.",
                     "items": {
                         "type": "object",
                         "title": "actionState",
@@ -301,19 +301,19 @@
                 "errors": {
                     "type": "array",
                     "title": "Errors",
-                    "description": "Array of errors. Errors are kept until resolution.",
+                    "description": "Array of error objects. All active errors of the AGV should be in the list. An empty array indicates that the AGV has no active errors.",
                     "items": {
                         "type": "object",
-                        "description": "Array of references to identify the source of the error (e. g. headerId, orderId, actionId, ...).\nFor additional information see \"Best Practice\" chapter 7.",
+                        "description": "An error object.",
                         "title": "Error",
                         "properties": {
                             "errorType": {
                                 "type": "string",
-                                "description": "Type of error."
+                                "description": "Type / name of error."
                             },
                             "errorReferences": {
                                 "type": "array",
-                                "description": "References the type of reference (e. g. headerId, orderId, actionId, ...).",
+                                "description": "Array of references to identify the source of the error (e. g. headerId, orderId, actionId, ...).\nFor additional information see \"Best Practice\" chapter 7.",
                                 "title": "errorReferences",
                                 "items": {
                                     "type": "object",
@@ -357,9 +357,10 @@
                 "information": {
                     "type": "array",
                     "title": "Information",
-                    "description": "Array of information messages. Messages are only for visualization/debugging. There's no specification when these messages are deleted.",
+                    "description": "Array of information objects. An empty array indicates that the AGV has no information. This should only be used for visualization or debugging – it must not be used for logic in master control. Objects are only for visualization/debugging. There's no specification when these objects are deleted.",
                     "items": {
                         "type": "object",
+                        "description": "An information object.",
                         "title": "Information",
                         "properties": {
                             "infoType": {

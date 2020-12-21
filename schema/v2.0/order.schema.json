@@ -79,39 +79,8 @@
                                 "description": "Array of actions that are to be executed on the node. Their sequence in the list governs their sequence of execution.",
                                 "type": "array",
                                 "items": {
-                                    "type": "object",
-                                    "title": "nodeAction",
-                                    "description": "Node Action",
-                                    "required": [
-                                        "actionId",
-                                        "actionType",
-                                        "blockingType"
-                                    ],
-                                    "properties": {
-                                        "actionType": {
-                                            "type": "string",
-                                            "title": "actionType",
-                                            "description": "Enum of actions as described in the first column of \"Actions and Parameters\"\nIdentifies the function of the action."
-                                        },
-                                        "actionId": {
-                                            "type": "string",
-                                            "title": "actionId",
-                                            "description": "ID to distinguish between multiple actions with the same type on the same node."
-                                        },
-                                        "actionDescription": {
-                                            "type": "string",
-                                            "title": "actionDescription",
-                                            "description": "Additional information on the action."
-                                        },
-                                        "blockingType": {
-                                            "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/blockingType",
-                                            "description": "Regulates if the action is allowed to be executed during movement and/or parallel to other actions.\nnone: action can happen in parallel with others, including movement.\nsoft: action can happen simultaneously with others, but not while moving.\nhard: no other actions can be performed while this action is running."
-                                        },
-                                        "actionParameters": {
-                                            "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/actionParameters",
-                                            "description": "Array of actionParameter-objects for the indicated action e. g. deviceId, loadId, external Triggers."
-                                        }
-                                    }
+                                    "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/action",
+                                    "description": "Node Action Object"
                                 }
                             }
                         }
@@ -222,39 +191,8 @@
                                 "description": "Array of action objects with detailed information.",
                                 "type": "array",
                                 "items": {
-                                    "type": "object",
-                                    "title": "edgeAction",
-                                    "description": "Edge Action",
-                                    "required": [
-                                        "actionId",
-                                        "actionType",
-                                        "blockingType"
-                                    ],
-                                    "properties": {
-                                        "actionType": {
-                                            "type": "string",
-                                            "title": "actionType",
-                                            "description": "Enum of actions as described in the first column of \"Actions and Parameters\"\nIdentifies the function of the action."
-                                        },
-                                        "actionId": {
-                                            "type": "string",
-                                            "title": "actionId",
-                                            "description": "ID to distinguish between multiple actions with the same name on the same edge."
-                                        },
-                                        "actionDescription": {
-                                            "type": "string",
-                                            "title": "actionDescription",
-                                            "description": "Additional information on the action."
-                                        },
-                                        "blockingType": {
-                                            "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/blockingType",
-                                            "description": "Regulates if the action is allowed to be executed during movement and/or parallel to other actions.\nnone: action can happen in parallel with others, including movement.\nsoft: action can happen simultaneously with others, but not while moving.\nhard: no other actions can be performed while this action is running."
-                                        },
-                                        "actionParameters": {
-                                            "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/actionParameters",
-                                            "description": "Array of actionParameter-objects for the indicated action e. g. deviceId, loadId, external Triggers."
-                                        }
-                                    }
+                                    "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/action",
+                                    "description": "Edge Action Object"
                                 }
                             }
                         }

@@ -47,56 +47,85 @@
                 "serialNumber"
             ]
         },
-        "actionParameters": {
-            "type": "array",
-            "items": {
-                "title": "actionParameter",
-                "type": "object",
-                "required": [
-                    "key",
-                    "value"
-                ],
-                "properties": {
-                    "key": {
-                        "type": "string",
-                        "description": "The key of the action parameter. For example. duration, direction, signal.",
-                        "examples": [
-                            "duration",
-                            "direction",
-                            "signal"
-                        ]
-                    },
-                    "value": {
-                        "type": [
-                            "array",
-                            "boolean",
-                            "number",
-                            "string"
+        "action": {
+            "type": "object",
+            "title": "action",
+            "required": [
+                "actionId",
+                "actionType",
+                "blockingType"
+            ],
+            "properties": {
+                "actionType": {
+                    "type": "string",
+                    "title": "actionType",
+                    "description": "Enum of actions as described in the first column of \"Actions and Parameters\"\nIdentifies the function of the action."
+                },
+                "actionId": {
+                    "type": "string",
+                    "title": "actionId",
+                    "description": "ID to distinguish between multiple actions, either instant or with the same type on the same node/edge."
+                },
+                "actionDescription": {
+                    "type": "string",
+                    "title": "actionDescription",
+                    "description": "Additional information on the action."
+                },
+                "blockingType": {
+                    "type": "string",
+                    "title": "blockingType",
+                    "description": "Regulates if the action is allowed to be executed during movement and/or parallel to other actions.\nnone: action can happen in parallel with others, including movement.\nsoft: action can happen simultaneously with others, but not while moving.\nhard: no other actions can be performed while this action is running.",
+                    "enum": [
+                        "NONE",
+                        "SOFT",
+                        "HARD"
+                    ]
+                },
+                "actionParameters": {
+                    "type": "array",
+                    "description": "Array of actionParameter objects for the indicated action e.g. deviceId, loadId, external triggers.",
+                    "items": {
+                        "type": "object",
+                        "description": "ActionParameter Object",
+                        "title": "actionParameter",
+                        "required": [
+                            "key",
+                            "value"
                         ],
-                        "description": "The value of the action parameter. For example: 103.2, \"left\", true, [ 1, 2, 3].",
-                        "examples": [
-                            103.2,
-                            "left",
-                            true,
-                            [
-                                "arrays",
-                                "are",
-                                "also",
-                                "valid"
-                            ]
-                        ]
+                        "properties": {
+                            "key": {
+                                "type": "string",
+                                "description": "The key of the action parameter. For example. duration, direction, signal.",
+                                "examples": [
+                                    "duration",
+                                    "direction",
+                                    "signal"
+                                ]
+                            },
+                            "value": {
+                                "type": [
+                                    "array",
+                                    "boolean",
+                                    "number",
+                                    "string"
+                                ],
+                                "description": "The value of the action parameter. For example: 103.2, \"left\", true, [ 1, 2, 3].",
+                                "examples": [
+                                    103.2,
+                                    "left",
+                                    true,
+                                    [
+                                        "arrays",
+                                        "are",
+                                        "also",
+                                        "valid"
+                                    ]
+                                ]
+                            }
+                        }
                     }
                 }
             }
-        },
-        "blockingType": {
-            "type": "string",
-            "title": "blockingType",
-            "enum": [
-                "NONE",
-                "SOFT",
-                "HARD"
-            ]
         },
         "nodePosition": {
             "title": "nodePosition",
@@ -117,7 +146,7 @@
                 },
                 "theta": {
                     "title": "Theta",
-                    "description": "Orientation of the AGV on the node.\nOptional: vehicle can plan the path by itself.\nIf defined, the AGV has to assume the theta angle on this node.\nIf previous edge disallows rotation, the AGV is to rotate on the node.\nIf following edge has a differing orientation defined but disallows rotation, the AGV is to rotate on the node to the edges desired rotation before entering the edge.",
+                    "description": "Range: [-pi .. pi].\nOrientation of the AGV on the node.\nOptional: vehicle can plan the path by itself.\nIf defined, the AGV has to assume the theta angle on this node.\nIf previous edge disallows rotation, the AGV is to rotate on the node.\nIf following edge has a differing orientation defined but disallows rotation, the AGV is to rotate on the node to the edges desired rotation before entering the edge.",
                     "type": "number",
                     "minimum": -3.14159265359,
                     "maximum": 3.14159265359
@@ -133,7 +162,7 @@
                     "type": "number",
                     "minimum": 0,
                     "maximum": 3.141592654,
-                    "description": "Indicates how exact an AGV has to align its orientation with the nodes theta. The value is interpreted as theta+-deviation.nIf = 0: no deviation is allowed (no deviation means within the normal tolerance of the AGV manufacturer)."
+                    "description": "Indicates how big the deviation of theta angle can be. The lowest acceptable angle is theta - allowedDeviationTheta and the highest acceptable angle is theta + allowedDeviationTheta.\nIf = 0: no deviation is allowed (no deviation means within the normal tolerance of the AGV manufacturer)."
                 },
                 "mapId": {
                     "title": "mapId",
@@ -233,13 +262,13 @@
                 },
                 "localizationScore": {
                     "type": "number",
-                    "description": "Describes the quality of the localization and therefore, can be used e. g. by SLAM-AGVs to describe how accurate the current position information is.\n0.0: position unknown\n1.0: position known\nOptional for vehicles that cannot estimate their localization score.\nOnly for logging and visualization purposes",
+                    "description": "Describes the quality of the localization and therefore, can be used e.g. by SLAM-AGVs to describe how accurate the current position information is.\n0.0: position unknown\n1.0: position known\nOptional for vehicles that cannot estimate their localization score.\nOnly for logging and visualization purposes",
                     "minimum": 0.0,
                     "maximum": 1.0
                 },
                 "deviationRange": {
                     "type": "number",
-                    "description": "Value for position deviation range in meters. Can be used if the AGV is able to derive it."
+                    "description": "Value for the deviation range of the position in meters.\nOptional for vehicles that cannot estimate their deviation e.g. grid-based localization.\nOnly for logging and visualization purposes."
                 }
             },
             "required": [
