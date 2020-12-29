@@ -74,7 +74,7 @@
                 "blockingType": {
                     "type": "string",
                     "title": "blockingType",
-                    "description": "Regulates if the action is allowed to be executed during movement and/or parallel to other actions.\nnone: action can happen in parallel with others, including movement.\nsoft: action can happen simultaneously with others, but not while moving.\nhard: no other actions can be performed while this action is running.",
+                    "description": "Regulates if the action is allowed to be executed during movement and/or parallel to other actions.\nNONE: action can happen in parallel with others, including movement.\nSOFT: action can happen simultaneously with others, but not while moving.\nHARD: no other actions can be performed while this action is running.",
                     "enum": [
                         "NONE",
                         "SOFT",
