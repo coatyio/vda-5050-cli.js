@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.8](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.7...v2.0.8) (2020-12-29)
+
+This patch release ensures that enum values of eStop and actionStatus are all uppercase.
+
+### Bug Fixes
+
+* **schema:** ensure enum eStop and actionStatus provide uppercase values ([b3a356a](https://github.com/coatyio/vda-5050-cli.js/commit/b3a356ad9a57ac690fe95db7e54bf6bb1be49be0))
+
 ## [2.0.7](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.6...v2.0.7) (2020-12-21)
 
 This patch release provides a common schema for instant, node, and edge actions.
