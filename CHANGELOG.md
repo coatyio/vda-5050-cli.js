@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.9](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.8...v2.0.9) (2021-01-25)
+
+This patch release adds missing action status PAUSED to the state schema.
+
+### Bug Fixes
+
+* **schema:** add missing action status PAUSED to enum actionStatus ([bb8d5cf](https://github.com/coatyio/vda-5050-cli.js/commit/bb8d5cfa43e4154c5c00a857229c601e897af189))
+
 ## [2.0.8](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.7...v2.0.8) (2020-12-29)
 
 This patch release ensures that enum values of eStop and actionStatus are all uppercase.
