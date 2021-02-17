@@ -1,6 +1,6 @@
 {
     "name": "vda-5050-cli",
-    "version": "2.0.9",
+    "version": "2.0.10",
     "description": "Command line interface for developing VDA 5050 clients",
     "homepage": "https://github.com/coatyio/vda-5050-cli.js",
     "repository": {
@@ -9,7 +9,7 @@
     },
     "readme": "README.md",
     "bin": {
-        "vda-5050": "./bin/vda-5050"
+        "vda-5050": "bin/vda-5050"
     },
     "scripts": {
         "release:prompt": "node -e \"require('./.release-it.js').promptReleaseNotes()\"",
