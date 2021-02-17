@@ -1,14 +1,14 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://vda-5050-schema.org/v2.0/order.schema.json",
+    "$id": "http://vda-5050-schema.org/v1.1/order.schema.json",
     "title": "order",
     "description": "An order to be communicated from master control to the AGV.",
-    "documentVersion": "2.0, June 2020",
+    "documentVersion": "1.1, June 2020",
     "subtopic": "/order",
     "type": "object",
     "allOf": [
         {
-            "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/header"
+            "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/header"
         },
         {
             "properties": {
@@ -71,7 +71,7 @@
                                 "description": "If true, the node is part of the base plan. If false, the node is part of the horizon plan."
                             },
                             "nodePosition": {
-                                "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/nodePosition",
+                                "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/nodePosition",
                                 "description": "Defines the position on a map in world coordinates. Each floor has its own map. Precision is up to the specific implementation."
                             },
                             "actions": {
@@ -79,7 +79,7 @@
                                 "description": "Array of actions that are to be executed on the node. Their sequence in the list governs their sequence of execution.",
                                 "type": "array",
                                 "items": {
-                                    "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/action",
+                                    "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/action",
                                     "description": "Node Action Object"
                                 }
                             }
@@ -183,7 +183,7 @@
                                 "description": "Distance of the path from startNode to endNode in meters. This value is used by line-guided AGVs to decrease their speed before reaching a stop position."
                             },
                             "trajectory": {
-                                "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/trajectory",
+                                "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/trajectory",
                                 "description": "Trajectory JSON-object for this edge as a NURBS. Defines the curve on which the AGV should move between startNode and endNode.\nOptional: Can be omitted if AGV cannot process trajectories or if AGV plans its own trajectory."
                             },
                             "actions": {
@@ -191,7 +191,7 @@
                                 "description": "Array of action objects with detailed information.",
                                 "type": "array",
                                 "items": {
-                                    "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/action",
+                                    "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/action",
                                     "description": "Edge Action Object"
                                 }
                             }

@@ -1,14 +1,14 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://vda-5050-schema.org/v2.0/state.schema.json",
+    "$id": "http://vda-5050-schema.org/v1.1/state.schema.json",
     "title": "state",
     "description": "All encompassing state of the AGV.",
-    "documentVersion": "2.0, June 2020",
+    "documentVersion": "1.1, June 2020",
     "subtopic": "/state",
     "type": "object",
     "allOf": [
         {
-            "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/header"
+            "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/header"
         },
         {
             "properties": {
@@ -83,7 +83,7 @@
                                 "description": "Verbose node description"
                             },
                             "nodePosition": {
-                                "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/nodePosition",
+                                "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/nodePosition",
                                 "description": "Node position. The object is defined in chapter 6.6. Optional: master control has this information. Can be sent additionally, e.g. for debugging purposes."
                             },
                             "released": {
@@ -122,7 +122,7 @@
                                 "description": "True: Edge is part of base. False: Edge is part of horizon."
                             },
                             "trajectory": {
-                                "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/trajectory",
+                                "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/trajectory",
                                 "description": "The trajectory is to be communicated as a NURBS and is defined in chapter 6.4.\nTrajectory segments are from the point where the AGV starts to enter the edge until the point where it reports that the next node was traversed."
                             }
                         },
@@ -134,11 +134,11 @@
                     }
                 },
                 "agvPosition": {
-                    "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/agvPosition",
+                    "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/agvPosition",
                     "description": "Current position of the AGV on the map.\nOptional: Can only be omitted for AGVs without the capability to localize themselves, e.g. line guided AGVs."
                 },
                 "velocity": {
-                    "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/velocity",
+                    "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/velocity",
                     "description": "The AGVs velocity in vehicle coordinates."
                 },
                 "loads": {
@@ -151,7 +151,7 @@
                         "properties": {
                             "loadId": {
                                 "type": "string",
-                                "description": "Unique identification number of the load (e. g. barcode or RFID)\nEmpty field if the AGV can identify the load but didnâ€™t identify the load yet.\nOptional if the AGV has cannot identify the load."
+                                "description": "Unique identification number of the load (e. g. barcode or RFID)\nEmpty field if the AGV can identify the load but didn't identify the load yet.\nOptional if the AGV has cannot identify the load."
                             },
                             "loadType": {
                                 "type": "string",

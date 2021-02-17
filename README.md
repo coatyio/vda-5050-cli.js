@@ -17,9 +17,10 @@
 ## Introduction
 
 This package provides a command line interface (CLI) with tools useful for
-developing client applications based on [VDA 5050](https://www.vda.de/)
-specification "Interface for the communication between automated guided vehicles
-(AGV) and a master control":
+developing applications and system components based on the [VDA
+5050](https://www.vda.de/dam/VDA5050_EN_V1.1.pdf) specification _"Interface for
+the communication between automated guided vehicles (AGV) and a master
+control"_:
 
 * Start an MQTT broker for development testing (not intended for use in a
   production environment).
@@ -30,9 +31,9 @@ specification "Interface for the communication between automated guided vehicles
   in your application, e.g. by a code generator tool that creates code for
   validating VDA 5050 topic payloads before publishing or upon receipt.
 
-The CLI can be used independently of or in combination with the
-[vda-5050](https://www.npmjs.com/package/vda-5050) npm package, a
-library for implementing VDA 5050 clients in TypeScript/JavaScript.
+The CLI can be used independently of or in combination with the npm package
+[vda-5050-lib](https://www.npmjs.com/package/vda-5050-lib), a universal library
+for implementing systems based on VDA 5050 in TypeScript/JavaScript.
 
 ## Installation
 
@@ -141,9 +142,9 @@ vda-5050 schema --vda *
 # Output is written to vda-5050-types.ts in the current working directory.
 vda-5050 schema
 
-# Create Swift type definitions for VDA 5050 specification version 2.0.
+# Create Swift type definitions for VDA 5050 specification version 1.1.
 # Output is written to vda-5050-types.swift in the current working directory.
-vda-5050 schema --lang swift --vda 2.0
+vda-5050 schema --lang swift --vda 1.1
 
 # Create Python type definitions for latest VDA 5050 specification version
 # in the output file custom.py under src/types.
@@ -162,9 +163,9 @@ vda-5050 schema -l java -s myschemas/**/*.schema.json -o src/types/custom
 # https://github.com/coatyio/vda-5050-cli.js/blob/master/lib/schema.config.js
 vda-5050 schema  -c ~/vda-5050-scheme.config.js
 
-# Export VDA 5050 schema definitions for specification version 2.0 into
+# Export VDA 5050 schema definitions for specification version 1.1 into
 # the given output folder.
-vda-5050 schema -l json --vda 2.0 -o vda-5050/v2.0
+vda-5050 schema -l json --vda 1.1 -o vda-5050/v1.1
 ```
 
 Within your custom JSON schemas you can reference any common schema definition
@@ -179,7 +180,7 @@ definitions, export the VDA JSON schemas in question as shown in the example
 above and inspect the file `common.schema.json`.
 
 For example, to combine the common header properties defined in VDA 5050
-specification version 2.0 into your schema, use the `allOf` keyword like this:
+specification version 1.1 into your schema, use the `allOf` keyword like this:
 
 ```json
 {
@@ -188,7 +189,7 @@ specification version 2.0 into your schema, use the `allOf` keyword like this:
     "type": "object",
     "allOf": [
         {
-            "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/header"
+            "$ref": "http://vda-5050-schema.org/v1.1/common.schema.json#/definitions/header"
         },
         {
             "properties": {
