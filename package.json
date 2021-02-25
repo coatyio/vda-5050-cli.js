@@ -48,6 +48,7 @@
     "dependencies": {
         "aedes-cli": "^0.4.3",
         "fast-glob": "^3.2.4",
+        "lodash": "^4.17.20",
         "minimist": "^1.2.5",
         "quicktype-core": "^6.0.69",
         "yargs": "^16.1.0"
