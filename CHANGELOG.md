@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.12](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.11...v2.0.12) (2021-02-27)
+
+This patch release accepts broker connections on the unspecified IP address. 
+
+### Bug Fixes
+
+* **broker:** accept connections on unspecified IPv6 (::) or IPv4 address (0.0.0.0) ([eb5c099](https://github.com/coatyio/vda-5050-cli.js/commit/eb5c099d8032f864d26ad5d1d51e7c7ae4f1f161))
+
 ## [2.0.11](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.10...v2.0.11) (2021-02-25)
 
 This patch release adds a dependency required for local installation.
