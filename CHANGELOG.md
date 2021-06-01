@@ -2,7 +2,7 @@
 
 ## [2.0.12](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.11...v2.0.12) (2021-02-27)
 
-This patch release accepts broker connections on the unspecified IP address. 
+This patch release accepts broker connections on the unspecified IP address.
 
 ### Bug Fixes
 
@@ -11,6 +11,7 @@ This patch release accepts broker connections on the unspecified IP address.
 ## [2.0.11](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.10...v2.0.11) (2021-02-25)
 
 This patch release adds a dependency required for local installation.
+
 ## [2.0.10](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.9...v2.0.10) (2021-02-17)
 
 This patch release adjusts the VDA 5050 schema version formerly published as v2.0 to v1.1.
