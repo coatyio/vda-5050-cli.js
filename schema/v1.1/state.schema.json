@@ -46,7 +46,7 @@
                 },
                 "newBaseRequest": {
                     "type": "boolean",
-                    "description": "True: AGV is almost at the end of the base and will reduce speed if no new base is transmitted. Trigger for MC to send ne base\nFalse: no base update required"
+                    "description": "True: AGV is almost at the end of the base and will reduce speed if no new base is transmitted. Trigger for MC to send new base\nFalse: no base update required"
                 },
                 "distanceSinceLastNode": {
                     "type": "number",
