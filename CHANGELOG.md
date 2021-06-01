@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.13](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.12...v2.0.13) (2021-06-01)
+
+This patch release disables default publication of broker statistics in broker config.
+
+### Bug Fixes
+
+* **broker:** disable default publication of statistics messages in broker config ([5db35fd](https://github.com/coatyio/vda-5050-cli.js/commit/5db35fd140eec7a88a4d0dbeaba1657e95f16306))
+
 ## [2.0.12](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.11...v2.0.12) (2021-02-27)
 
 This patch release accepts broker connections on the unspecified IP address.
