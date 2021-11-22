@@ -46,18 +46,18 @@
         "url": "https://github.com/coatyio/vda-5050-cli.js/issues"
     },
     "dependencies": {
-        "aedes-cli": "^0.4.3",
-        "fast-glob": "^3.2.4",
-        "lodash": "^4.17.20",
+        "aedes-cli": "^0.5.0",
+        "fast-glob": "^3.2.7",
+        "lodash": "^4.17.21",
         "minimist": "^1.2.5",
-        "quicktype-core": "^6.0.69",
+        "quicktype-core": "^6.0.70",
         "yargs": "^16.1.0"
     },
     "devDependencies": {
-        "@release-it/conventional-changelog": "^2.0.0",
-        "@types/node": "^14.14.6",
+        "@release-it/conventional-changelog": "^3.3.0",
+        "@types/node": "^16.11.9",
         "readline-sync": "^1.4.10",
-        "release-it": "^14.2.1"
+        "release-it": "^14.11.8"
     },
     "engines": {
         "node": ">=10.0.0"
