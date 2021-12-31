@@ -18,9 +18,9 @@
 
 This package provides a command line interface (CLI) with tools useful for
 developing applications and system components based on the [VDA
-5050](https://www.vda.de/dam/VDA5050_EN_V1.1.pdf) specification _"Interface for
-the communication between automated guided vehicles (AGV) and a master
-control"_:
+5050](https://en.vda.de/en/services/Publications/vda-5050-v-1.1.-agv-communication-interface.html)
+specification _"Interface for the communication between automated guided
+vehicles (AGV) and a master control"_:
 
 * Start an MQTT broker for development testing (not intended for use in a
   production environment).
