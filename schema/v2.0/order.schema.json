@@ -1,0 +1,213 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://vda-5050-schema.org/v2.0/order.schema.json",
+    "title": "order",
+    "description": "An order to be communicated from master control to the AGV.",
+    "documentVersion": "2.0, November 2023",
+    "subtopic": "/order",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/header"
+        },
+        {
+            "properties": {
+                "orderId": {
+                    "title": "orderId",
+                    "description": "Unique order Identification.",
+                    "type": "string"
+                },
+                "orderUpdateId": {
+                    "title": "orderUpdateId",
+                    "description": "orderUpdate identification. Is unique per orderId. If an order update is rejected, this field is to be passed in the rejection message.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 4294967296
+                },
+                "zoneSetId": {
+                    "title": "zoneSetId",
+                    "description": "Unique identifier of the zone set that the AGV has to use for navigation or that was used by MC for planning.\nOptional: Some MC systems do not use zones. Some AGVs do not understand zones. Do not add to message if no zones are used.",
+                    "type": "string"
+                },
+                "nodes": {
+                    "title": "List of Nodes",
+                    "description": "This list holds the base and the horizon nodes of the order graph.",
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "type": "object",
+                        "title": "node",
+                        "required": [
+                            "nodeId",
+                            "sequenceId",
+                            "released",
+                            "actions"
+                        ],
+                        "properties": {
+                            "nodeId": {
+                                "title": "nodeId",
+                                "type": "string",
+                                "description": "Unique node identification. For example: pumpenhaus_1, MONTAGE",
+                                "examples": [
+                                    "pumpenhaus_1",
+                                    "MONTAGE"
+                                ]
+                            },
+                            "sequenceId": {
+                                "title": "sequenceId",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 4294967296,
+                                "description": "Id to track the sequence of nodes and edges in an order and to simplify order updates.\nThe main purpose is to distinguish between a node which is passed more than once within one orderId. The variable sequenceId can run across all nodes and edges of the same order and is reset when a new orderId is issued."
+                            },
+                            "nodeDescription": {
+                                "title": "nodeDescription",
+                                "type": "string",
+                                "description": "Verbose Node Description."
+                            },
+                            "released": {
+                                "type": "boolean",
+                                "title": "released",
+                                "description": "If true, the node is part of the base plan. If false, the node is part of the horizon plan."
+                            },
+                            "nodePosition": {
+                                "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/nodePosition",
+                                "description": "Defines the position on a map in world coordinates. Each floor has its own map. Precision is up to the specific implementation."
+                            },
+                            "actions": {
+                                "title": "actions",
+                                "description": "Array of actions that are to be executed on the node. Their sequence in the list governs their sequence of execution.",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/action",
+                                    "description": "Node Action Object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "edges": {
+                    "type": "array",
+                    "title": "edges",
+                    "description": "Base and Horizon Edges of the Order Graph.",
+                    "items": {
+                        "type": "object",
+                        "title": "edge",
+                        "required": [
+                            "edgeId",
+                            "sequenceId",
+                            "released",
+                            "startNodeId",
+                            "endNodeId",
+                            "actions"
+                        ],
+                        "properties": {
+                            "edgeId": {
+                                "type": "string",
+                                "title": "edgeId",
+                                "description": "Unique edge identification"
+                            },
+                            "sequenceId": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 4294967296,
+                                "title": "sequenceId",
+                                "description": "Id to track the sequence of nodes and edges in an order and to simplify order updates. The variable sequenceId runs across all nodes and edges of the same order and is reset when a new orderId is issued."
+                            },
+                            "edgeDescription": {
+                                "type": "string",
+                                "title": "edgeDescription",
+                                "description": "Verbose description of the edge."
+                            },
+                            "released": {
+                                "type": "boolean",
+                                "title": "released",
+                                "description": "If true, the edge is part of the base plan. If false, the edge is part of the horizon plan."
+                            },
+                            "startNodeId": {
+                                "type": "string",
+                                "title": "startNodeId",
+                                "description": "The nodeId of the start node."
+                            },
+                            "endNodeId": {
+                                "type": "string",
+                                "title": "endNodeId",
+                                "description": "The nodeId of the end node."
+                            },
+                            "maxSpeed": {
+                                "type": "number",
+                                "title": "maxSpeed",
+                                "description": "permitted maximum speed of the agv on the edge in m/s. Speed is defined by the fastest point of the vehicle."
+                            },
+                            "maxHeight": {
+                                "type": "number",
+                                "title": "maxHeight",
+                                "description": "Permitted maximum height of the vehicle, including the load, on edge. In meters."
+                            },
+                            "minHeight": {
+                                "type": "number",
+                                "title": "minHeight",
+                                "description": "Permitted minimal height of the edge measured at the bottom of the load. In meters."
+                            },
+                            "orientation": {
+                                "type": "number",
+                                "title": "orientation",
+                                "description": "Orientation of the AGV on the edge relative to the map coordinate origin (for holonomic vehicles with more than one driving direction).\nExample: orientation Pi/2 rad will lead to a rotation of 90 degrees.\nIf AGV starts in different orientation, rotate the vehicle on the edge to the desired orientation if rotationAllowed is set to \"true\".\nIf rotationAllowed is \"false\", rotate before entering the edge.\nIf that is not possible, reject the order.\nIf a trajectory with orientation is defined, follow the trajectories orientation. If a trajectory without orientation and the orientation field here is defined, apply the orientation to the tangent of the trajectory.",
+                                "minimum": -3.14159265359,
+                                "maximum": 3.14159265359
+                            },
+                            "orientationType":{
+                                "type": "string",
+                                "description": "Enum {GLOBAL, TANGENTIAL}: \n\"GLOBAL\"- relative to the global project specific map coordinate system; \n\"TANGENTIAL\"- tangential to the edge. \nIf not defined, the default value is \"TANGENTIAL\"."
+                            },
+                            "direction": {
+                                "type": "string",
+                                "title": "direction",
+                                "description": "Sets direction at junctions for line-guided vehicles, to be defined initially (vehicle-individual). Can be descriptive (left, right, middle, straight) or a frequency (\"433MHz\").",
+                                "examples": [
+                                    "left",
+                                    "right",
+                                    "straight",
+                                    "433MHz"
+                                ]
+                            },
+                            "rotationAllowed": {
+                                "type": "boolean",
+                                "title": "rotationAllowed",
+                                "description": "If true, rotation is allowed on the edge."
+                            },
+                            "maxRotationSpeed": {
+                                "type": "number",
+                                "title": "maxRotationSpeed",
+                                "description": "Maximum rotation speed in rad/s"
+                            },
+                            "length": {
+                                "type": "number",
+                                "description": "Distance of the path from startNode to endNode in meters. \nOptional: This value is used by line-guided AGVs to decrease their speed before reaching a stop position."
+                            },
+                            "trajectory": {
+                                "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/trajectory",
+                                "description": "Trajectory JSON-object for this edge as a NURBS. Defines the curve on which the AGV should move between startNode and endNode.\nOptional: Can be omitted if AGV cannot process trajectories or if AGV plans its own trajectory."
+                            },
+                            "actions": {
+                                "title": "Actions",
+                                "description": "Array of action objects with detailed information.",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/action",
+                                    "description": "Edge Action Object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "orderId",
+                "orderUpdateId",
+                "nodes",
+                "edges"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://vda-5050-schema.org/v2.0/instant-actions.schema.json",
+    "title": "instantActions",
+    "description": "Instant actions that the AGV is to execute as soon as they arrive.",
+    "documentVersion": "2.0, November 2023",
+    "subtopic": "/instantActions",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/header"
+        },
+        {
+            "properties": {
+                "instantActions": {
+                    "description": "Array of actions that need to be performed immediately and are not part of the regular order.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/action",
+                        "description": "Instant Action Object"
+                    }
+                }
+            },
+            "required": [
+                "instantActions"
+            ]
+        }
+    ]
+}

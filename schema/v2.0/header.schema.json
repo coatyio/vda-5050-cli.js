@@ -1,0 +1,9 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://vda-5050-schema.org/v2.0/header.schema.json",
+    "title": "header",
+    "description": "Includes the protocol header of a VDA 5050 object defining common properties: headerId, manufacturer, serialNumber, timestamp, version.",
+    "documentVersion": "2.0, November 2023",
+    "type": "object",
+    "$ref": "http://vda-5050-schema.org/v2.0/common.schema.json#/definitions/header"
+}
