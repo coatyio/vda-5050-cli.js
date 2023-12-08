@@ -1,5 +1,13 @@
 # Changelog
 
+# [2.1.0](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.13...v2.1.0) (2023-12-08)
+
+This feature release adds VDA5050 V2.0 schemas.
+
+### Features
+
+* **schema:** add schemas for vda5050 v2.0 ([c7592f9](https://github.com/coatyio/vda-5050-cli.js/commit/c7592f97cfaa4fa59f1417a89ca8641b29048a97))
+
 ## [2.0.13](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.12...v2.0.13) (2021-06-01)
 
 This patch release disables default publication of broker statistics in broker config.
