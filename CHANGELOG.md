@@ -1,5 +1,8 @@
 # Changelog
 
+## [2.1.1](https://github.com/coatyio/vda-5050-cli.js/compare/v2.1.0...v2.1.1) (2023-12-08)
+
+This patch release adds enum properties to order.edge.orientationType
 # [2.1.0](https://github.com/coatyio/vda-5050-cli.js/compare/v2.0.13...v2.1.0) (2023-12-08)
 
 This feature release adds VDA5050 V2.0 schemas.
