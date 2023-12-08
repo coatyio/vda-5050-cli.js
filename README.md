@@ -124,7 +124,7 @@ Schema Options
   -l, --lang    the target language, e.g. ts (default), js, swift, py, rb, java, go, cs, cpp, ...
                 Specify json to export raw JSON schemas                                  [string]
   -V, --vda     the VDA 5050 specification version to use (default latest)
-                Specify * to list all available versions                                 [string]
+                Specify "*" to list all available versions                               [string]
   -s, --schema  the (glob) path to custom JSON schema file(s)                            [string]
   -o, --out     the path to the output file or folder                                    [string]
   -c, --config  the config file with (additional) options to use. For details, see
@@ -136,11 +136,15 @@ Some examples:
 
 ```sh
 # List all available VDA 5050 schema versions.
-vda-5050 schema --vda *
+vda-5050 schema --vda "*"
 
 # Create TypeScript type definitions for the latest VDA 5050 specification version.
 # Output is written to vda-5050-types.ts in the current working directory.
 vda-5050 schema
+
+# Create TypeScript type definitions with custom VDA 5050 schema files.
+# Output is written to vda-5050-types.ts in the current working directory.
+vda-5050 schema -s "myschemas/"
 
 # Create Swift type definitions for VDA 5050 specification version 1.1.
 # Output is written to vda-5050-types.swift in the current working directory.
@@ -155,7 +159,7 @@ vda-5050 schema --lang py --out src/types/custom
 # The input schema path supports glob patterns to specify multiple schema files,
 # for details, see https://github.com/mrmlnc/fast-glob#pattern-syntax
 # Use forward slash path syntax for input schemas, even on Windows.
-vda-5050 schema -l java -s myschemas/**/*.schema.json -o src/types/custom
+vda-5050 schema -l java -s "myschemas/**/*.schema.json" -o src/types/custom
 
 # Create type definitions using options from a configuration file.
 # Put (only) the options to override in a JSON or JavaScript config file.
