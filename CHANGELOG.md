@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.2](https://github.com/coatyio/vda-5050-cli.js/compare/v2.1.1...v2.1.2) (2024-04-09)
+
+InstantAction Topic fix actions property VDA-V2.0.0
+
+### Bug Fixes
+
+* instantActions property VDA V2.0 ([cd34b23](https://github.com/coatyio/vda-5050-cli.js/commit/cd34b23e85598c1a6157333e03f648a93fc93cee))
+
 ## [2.1.1](https://github.com/coatyio/vda-5050-cli.js/compare/v2.1.0...v2.1.1) (2023-12-08)
 
 This patch release adds enum properties to order.edge.orientationType
