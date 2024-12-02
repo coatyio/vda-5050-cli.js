@@ -1,5 +1,13 @@
 # Changelog
 
+# [2.2.0](https://github.com/coatyio/vda-5050-cli.js/compare/v2.1.2...v2.2.0) (2024-12-02)
+
+VDA5050 V2.1.0 support
+
+### Features
+
+* add support vor vda5050 v2.1 ([93adcce](https://github.com/coatyio/vda-5050-cli.js/commit/93adcce17e824f499c9e23015e8613372e911d6b))
+
 ## [2.1.2](https://github.com/coatyio/vda-5050-cli.js/compare/v2.1.1...v2.1.2) (2024-04-09)
 
 InstantAction Topic fix actions property VDA-V2.0.0
