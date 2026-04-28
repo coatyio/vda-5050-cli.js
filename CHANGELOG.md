@@ -1,5 +1,13 @@
 # Changelog
 
+# [2.4.0](https://github.com/coatyio/vda-5050-cli.js/compare/v2.3.0...v2.4.0) (2026-04-28)
+
+Add VDA5050 V3.0
+
+### Features
+
+* add VDA5050 V3.0 Support ([881eb36](https://github.com/coatyio/vda-5050-cli.js/commit/881eb360ab5a0f1a0a2f181f6f189ba9a43d8b07))
+
 # [2.3.0](https://github.com/coatyio/vda-5050-cli.js/compare/v2.2.0...v2.3.0) (2025-01-27)
 
 Vda5050 V2.1 support
