@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "visualization",
+    "description": "Mobile robot position and/or velocity for visualization purposes. Can be published at a higher rate if wanted. Since bandwidth may be expensive depening on the update rate for this topic, all fields are optional.",
+    "subtopic": "/visualization",
+    "type": "object",
+    "required": [
+        "headerId",
+        "timestamp",
+        "version",
+        "manufacturer",
+        "serialNumber",
+        "referenceStateHeaderId"
+    ],
+    "properties": {
+        "headerId": {
+            "type": "integer",
+            "description": "headerId of the message. The headerId is defined per topic and incremented by 1 with each sent (but not necessarily received) message."
+        },
+        "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO8601 format (YYYY-MM-DDTHH:mm:ss.fffZ).",
+            "examples": [
+                "1991-03-11T11:40:03.123Z"
+            ]
+        },
+        "version": {
+            "type": "string",
+            "description": "Version of the protocol [Major].[Minor].[Patch]",
+            "examples": [
+                "1.3.2"
+            ]
+        },
+        "manufacturer": {
+            "type": "string",
+            "description": "Manufacturer of the mobile robot"
+        },
+        "serialNumber": {
+            "type": "string",
+            "description": "Serial number of the mobile robot."
+        },
+        "plannedPath": {
+            "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/plannedPath"
+        },
+        "intermediatePath": {
+            "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/intermediatePath"
+        },
+        "mobileRobotPosition": {
+            "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/mobileRobotPosition"
+        },
+        "velocity": {
+            "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/velocity"
+        }
+    },
+    "$id": "http://vda-5050-schema.org/v3.0/visualization.schema.json"
+}

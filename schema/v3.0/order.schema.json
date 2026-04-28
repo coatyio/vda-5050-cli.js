@@ -1,0 +1,75 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "order",
+    "description": "The message schema to communicate orders from fleet control to the mobile robot.",
+    "subtopic": "/order",
+    "type": "object",
+    "required": [
+        "headerId",
+        "timestamp",
+        "version",
+        "manufacturer",
+        "serialNumber",
+        "orderId",
+        "orderUpdateId",
+        "nodes",
+        "edges"
+    ],
+    "properties": {
+        "headerId": {
+            "type": "integer",
+            "description": "headerId of the message. The headerId is defined per topic and incremented by 1 with each sent (but not necessarily received) message."
+        },
+        "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO8601 format (YYYY-MM-DDTHH:mm:ss.fffZ).",
+            "examples": [
+                "1991-03-11T11:40:03.123Z"
+            ]
+        },
+        "version": {
+            "type": "string",
+            "description": "Version of the protocol [Major].[Minor].[Patch]",
+            "examples": [
+                "1.3.2"
+            ]
+        },
+        "manufacturer": {
+            "type": "string",
+            "description": "Manufacturer of the mobile robot"
+        },
+        "serialNumber": {
+            "type": "string",
+            "description": "Serial number of the mobile robot."
+        },
+        "orderId": {
+            "description": "Order Identification. This is to be used to identify multiple order messages that belong to the same order.",
+            "type": "string"
+        },
+        "orderUpdateId": {
+            "description": "Order update identification. It is unique per orderId, starting at 0 for a new order. If an order update is rejected, this field shall be passed in the rejection message.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "orderDescription": {
+            "description": "Additional human-readable information only for visualization purposes; this shall not be used for any logical processes.",
+            "type": "string"
+        },
+        "nodes": {
+            "description": "Array of nodes objects to be traversed for fulfilling the order. One node is enough for a valid order. Leave edge list empty for that case.",
+            "type": "array",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/node"
+            }
+        },
+        "edges": {
+            "type": "array",
+            "description": "Directional connection between two nodes. Array of edge objects to be traversed for fulfilling the order. One node is enough for a valid order. Leave edge list empty for that case.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/edge"
+            }
+        }
+    },
+    "$id": "http://vda-5050-schema.org/v3.0/order.schema.json"
+}

@@ -1,0 +1,1362 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "common",
+    "description": "Common definitions for VDA 5050 V3.0.",
+    "type": "object",
+    "definitions": {
+        "trajectory": {
+            "type": "object",
+            "required": [
+                "controlPoints"
+            ],
+            "properties": {
+                "degree": {
+                    "type": "integer",
+                    "description": "Degree of the NURBS curve defining the trajectory. If not defined, the default value is 1.",
+                    "minimum": 1
+                },
+                "knotVector": {
+                    "type": "array",
+                    "description": "Sequence of parameter values that determines where and how the control points affect the NURBS curve.",
+                    "items": {
+                        "type": "number",
+                        "minimum": 0.0,
+                        "maximum": 1.0
+                    }
+                },
+                "controlPoints": {
+                    "type": "array",
+                    "description": "List of JSON controlPoint objects defining the control points of the NURBS, which includes the beginning and end point.",
+                    "items": {
+                        "type": "object",
+                        "title": "controlPoint",
+                        "required": [
+                            "x",
+                            "y"
+                        ],
+                        "properties": {
+                            "x": {
+                                "type": "number",
+                                "description": "X coordinate described in the world coordinate system.",
+                                "unit": "m"
+                            },
+                            "y": {
+                                "type": "number",
+                                "description": "Y coordinate described in the world coordinate system.",
+                                "unit": "m"
+                            },
+                            "weight": {
+                                "type": "number",
+                                "description": "The weight, with which this control point pulls on the curve. When not defined, the default will be 1.0."
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "mobileRobotPosition": {
+            "type": "object",
+            "description": "Defines the position on a map in world coordinates. Each floor has its own map.",
+            "required": [
+                "x",
+                "y",
+                "theta",
+                "mapId",
+                "localized"
+            ],
+            "properties": {
+                "x": {
+                    "type": "number",
+                    "unit": "m"
+                },
+                "y": {
+                    "type": "number",
+                    "unit": "m"
+                },
+                "theta": {
+                    "type": "number",
+                    "unit": "rad",
+                    "minimum": -3.14159265359,
+                    "maximum": 3.14159265359
+                },
+                "mapId": {
+                    "type": "string",
+                    "description": "Unique identification of the map."
+                },
+                "localized": {
+                    "type": "boolean",
+                    "description": "True: mobile robot is localized. x, y, and theta can be trusted. False: mobile robot is not localized. x, y, and theta cannot be trusted."
+                },
+                "localizationScore": {
+                    "type": "number",
+                    "description": "Describes the quality of the localization and therefore, can be used, e.g., by SLAM mobile robot to describe how accurate the current position information is.\n0.0: position unknown\n1.0: position known\nOptional for vehicles that cannot estimate their localization score.\nOnly for logging and visualization purposes",
+                    "minimum": 0.0,
+                    "maximum": 1.0
+                },
+                "deviationRange": {
+                    "type": "number",
+                    "description": "Value for position deviation range in meters. Optional for vehicles that cannot estimate their deviation, e.g., grid-based localization. Only for logging and visualization purposes.",
+                    "unit": "m",
+                    "minimum": 0.0
+                }
+            }
+        },
+        "intermediatePath": {
+            "type": "object",
+            "description": "Represents the estimated time of arrival at closer waypoints that the mobile robot is able to perceive with its sensors.",
+            "required": [
+                "polyline"
+            ],
+            "properties": {
+                "polyline": {
+                    "type": "array",
+                    "description": "Array of end points of segments of a polyline.",
+                    "items": {
+                        "type": "object",
+                        "description": "Endpoint of a segment within a defined polyline.",
+                        "required": [
+                            "x",
+                            "y",
+                            "eta"
+                        ],
+                        "properties": {
+                            "x": {
+                                "type": "number",
+                                "description": "X-coordinate described in the project-specific coordinate system.",
+                                "unit": "m"
+                            },
+                            "y": {
+                                "type": "number",
+                                "description": "Y-coordinate described in the project-specific coordinate system.",
+                                "unit": "m"
+                            },
+                            "theta": {
+                                "type": "number",
+                                "description": "Absolute orientation of the mobile robot in the project-specific coordinate system.",
+                                "unit": "rad",
+                                "minimum": -3.14159265359,
+                                "maximum": 3.14159265359
+                            },
+                            "eta": {
+                                "type": "string",
+                                "description": "Estimated time of arrival/traversal. Formatted as a timestamp (ISO 8601, UTC); YYYY-MM-DDTHH:mm:ss.fffZ (e.g., '2017-04-15T11:40:03.123Z')."
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "plannedPath": {
+            "type": "object",
+            "description": "Represents a path within the robot's currently active order as NURBS.",
+            "required": [
+                "trajectory"
+            ],
+            "properties": {
+                "trajectory": {
+                    "$ref": "#/definitions/trajectory"
+                },
+                "traversedNodes": {
+                    "type": "array",
+                    "description": "Array of nodeIds as communicated in the currently executed order that are traversed within the shared planned path.",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "velocity": {
+            "type": "object",
+            "title": "velocity",
+            "description": "The mobile robot's velocity in mobile robot's coordinates",
+            "properties": {
+                "vx": {
+                    "type": "number",
+                    "description": "The mobile robot's velocity in its X-direction."
+                },
+                "vy": {
+                    "type": "number",
+                    "description": "The mobile robot's velocity in its Y-direction."
+                },
+                "omega": {
+                    "type": "number",
+                    "description": "The mobile robot's turning speed around its Z-axis."
+                }
+            }
+        },
+        "action": {
+            "type": "object",
+            "description": "Describes an action that the mobile robot can perform.",
+            "required": [
+                "actionId",
+                "actionType",
+                "blockingType"
+            ],
+            "properties": {
+                "actionType": {
+                    "type": "string",
+                    "description": "Name of the action. Identifies the function of the action."
+                },
+                "actionId": {
+                    "type": "string",
+                    "description": "Unique ID to identify the action and map them to the actionState in the state. Suggestion: Use UUIDs."
+                },
+                "actionDescriptor": {
+                    "type": "string",
+                    "description": "Additional information on the action."
+                },
+                "blockingType": {
+                    "type": "string",
+                    "description": "Regulates if the action is allowed to be executed during movement and/or parallel to other actions. NONE: allows driving and other actions; SINGLE: allows driving but no other actions; SOFT: allows other actions but not driving; HARD: is the only allowed action at that time.",
+                    "enum": [
+                        "NONE",
+                        "SOFT",
+                        "SINGLE",
+                        "HARD"
+                    ]
+                },
+                "actionParameters": {
+                    "type": "array",
+                    "description": "Action parameters for the indicated action, e.g., deviceId, loadId, external Triggers.",
+                    "items": {
+                        "title": "actionParameter",
+                        "type": "object",
+                        "required": [
+                            "key",
+                            "value"
+                        ],
+                        "properties": {
+                            "key": {
+                                "type": "string",
+                                "description": "The key of the action parameter.",
+                                "examples": [
+                                    "duration",
+                                    "direction",
+                                    "signal"
+                                ]
+                            },
+                            "value": {
+                                "type": [
+                                    "array",
+                                    "boolean",
+                                    "number",
+                                    "integer",
+                                    "string",
+                                    "object"
+                                ],
+                                "description": "The value of the action parameter",
+                                "examples": [
+                                    103.2,
+                                    "left",
+                                    true,
+                                    [
+                                        "arrays",
+                                        "are",
+                                        "also",
+                                        "valid"
+                                    ],
+                                    {
+                                        "objects": "as",
+                                        "well": true
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "retriable": {
+                    "type": "boolean",
+                    "description": "True: action can enter RETRIABLE state if it fails. False: action enters FAILED state directly after it fails. Default: false."
+                }
+            }
+        },
+        "node": {
+            "type": "object",
+            "title": "node",
+            "required": [
+                "nodeId",
+                "sequenceId",
+                "released",
+                "actions"
+            ],
+            "properties": {
+                "nodeId": {
+                    "type": "string",
+                    "description": "Identifier of the node. May not be unique among the nodes of the same order.",
+                    "examples": [
+                        "pumpenhaus_1",
+                        "MONTAGE"
+                    ]
+                },
+                "sequenceId": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Number to track the sequence of nodes and edges in an order and to simplify order updates. The main purpose is to distinguish between a node which is passed more than once within one orderId. The sequenceId is shared between nodes and edges and defines the sequence of traversal."
+                },
+                "nodeDescriptor": {
+                    "type": "string",
+                    "description": "Additional information on the node."
+                },
+                "released": {
+                    "type": "boolean",
+                    "description": "True indicates that the node is part of the base. False indicates that the node is part of the horizon."
+                },
+                "nodePosition": {
+                    "description": "Defines the position on a map in a global project-specific world coordinate system. Each floor has its own map. All maps must use the same project specific global origin. Optional for mobile robot-types that do not require the node position (e.g., line-guided mobile robots).",
+                    "type": "object",
+                    "required": [
+                        "x",
+                        "y",
+                        "mapId"
+                    ],
+                    "properties": {
+                        "x": {
+                            "type": "number",
+                            "description": "X-position on the map in reference to the map coordinate system. Precision is up to the specific implementation.",
+                            "unit": "m"
+                        },
+                        "y": {
+                            "type": "number",
+                            "description": "Y-position on the map in reference to the map coordinate system. Precision is up to the specific implementation.",
+                            "unit": "m"
+                        },
+                        "theta": {
+                            "type": "number",
+                            "description": "Absolute orientation of the mobile robot on the node. Optional: mobile robot can plan the path by itself. If defined, the mobile robot has to assume the theta angle on this node. If previous edge disallows rotation, the mobile robot must rotate on the node. If following edge has a differing orientation defined but disallows rotation, the mobile robot is to rotate on the node to the edges desired rotation before entering the edge.",
+                            "unit": "m",
+                            "minimum": -3.14159265359,
+                            "maximum": 3.14159265359
+                        },
+                        "allowedDeviationXY": {
+                            "type": "object",
+                            "description": "Indicates how precisely a mobile robot shall match the position of a node for it to be considered traversed. If a = b= 0.0: no deviation is allowed, which means the mobile robot shall reach or pass the node position with the mobile robot control point as precisely as is technically possible for the mobile robot. This applies also if allowedDeviationXY is smaller than what is technically viable for the mobile robot. If the mobile robot supports this attribute, but it is not defined for this node by fleet control the mobile robot shall assume the value of a and b as 0.0. The coordinates of the node defines the center of the ellipse.",
+                            "required": [
+                                "a",
+                                "b",
+                                "theta"
+                            ],
+                            "properties": {
+                                "a": {
+                                    "type": "number",
+                                    "description": "Length of the ellipse semi-major axis in meters",
+                                    "unit": "m",
+                                    "minimum": 0
+                                },
+                                "b": {
+                                    "type": "number",
+                                    "description": "Length of the ellipse semi-minor axis in meters",
+                                    "unit": "m",
+                                    "minimum": 0
+                                },
+                                "theta": {
+                                    "type": "number",
+                                    "description": "Rotation angle in radians",
+                                    "unit": "rad",
+                                    "minimum": -1.570796327,
+                                    "maximum": 1.570796327
+                                }
+                            }
+                        },
+                        "allowedDeviationTheta": {
+                            "type": "number",
+                            "description": "Indicates how big the deviation of theta angle can be. The lowest acceptable angle is theta - allowedDeviationTheta and the highest acceptable angle is theta + allowedDeviationTheta.",
+                            "unit": "rad",
+                            "minimum": 0,
+                            "maximum": 3.141592654
+                        },
+                        "mapId": {
+                            "description": "Unique identification of the map in which the position is referenced.",
+                            "type": "string"
+                        }
+                    }
+                },
+                "actions": {
+                    "description": "Array of actions to be executed on a node. Empty array, if no actions required.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/action"
+                    }
+                }
+            }
+        },
+        "edge": {
+            "type": "object",
+            "title": "edge",
+            "required": [
+                "edgeId",
+                "sequenceId",
+                "released",
+                "actions"
+            ],
+            "properties": {
+                "edgeId": {
+                    "type": "string",
+                    "description": "Identifier of the edge. May not be unique among the edges of the same order."
+                },
+                "sequenceId": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Number to track the sequence of nodes and edges in an order and to simplify order updates. The sequenceId is shared between nodes and edges and defines the sequence of traversal."
+                },
+                "edgeDescriptor": {
+                    "type": "string",
+                    "description": "Additional information on the edge."
+                },
+                "released": {
+                    "type": "boolean",
+                    "description": "True indicates that the edge is part of the base. False indicates that the edge is part of the horizon."
+                },
+                "maximumSpeed": {
+                    "type": "number",
+                    "description": "Permitted maximum speed on the edge in m/s. Speed is defined by the fastest measurement of the mobile robot.",
+                    "unit": "m/s"
+                },
+                "maximumMobileRobotHeight": {
+                    "type": "number",
+                    "description": "Permitted maximum height of the mobile robot, including the load, on edge in meters.",
+                    "unit": "m"
+                },
+                "minimumLoadHandlingDeviceHeight": {
+                    "type": "number",
+                    "description": "Permitted minimal height of the load handling device on the edge in meters",
+                    "unit": "m"
+                },
+                "orientation": {
+                    "type": "number",
+                    "description": "Orientation of the mobile robot on the edge. The value orientationType defines if it has to be interpreted relative to the global project specific map coordinate system or tangential to the edge. In case of interpreted tangential to the edge 0.0 = forwards and PI = backwards. Example: orientation Pi/2 rad will lead to a rotation of 90 degrees. If mobile robot starts in different orientation, rotate the mobile robot on the edge to the desired orientation if rotationAllowed is set to True. If rotationAllowed is False, rotate before entering the edge. If that is not possible, reject the order. If no trajectory is defined, apply the rotation to the direct path between the two connecting nodes of the edge. If a trajectory is defined for the edge, apply the orientation to the trajectory.",
+                    "unit": "rad",
+                    "minimum": -3.14159265359,
+                    "maximum": 3.14159265359
+                },
+                "orientationType": {
+                    "type": "string",
+                    "description": "Enum {GLOBAL, TANGENTIAL}: GLOBAL: relative to the global project specific map coordinate system; TANGENTIAL: tangential to the edge. If not defined, the default value is TANGENTIAL."
+                },
+                "direction": {
+                    "type": "string",
+                    "description": "Sets direction at junctions for line-guided or wire-guided mobile robots, to be defined initially (mobile robot-individual)."
+                },
+                "reachOrientationBeforeEntering": {
+                    "type": "boolean",
+                    "description": "True: Desired edge orientation shall be reached before entering the edge. False: Mobile robot can rotate into the desired orientation on the edge. Default: False."
+                },
+                "maxRotationSpeed": {
+                    "type": "number",
+                    "description": "Maximum rotation speed in rad/s. Optional: No limit, if not set.",
+                    "unit": "rad/s"
+                },
+                "trajectory": {
+                    "description": "Trajectory JSON-object for this edge as a NURBS. Defines the curve, on which the mobile robot should move between the start node and the end node. Optional: Can be omitted, if mobile robot cannot process trajectories or if mobile robot plans its own trajectory.",
+                    "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/trajectory"
+                },
+                "length": {
+                    "type": "number",
+                    "description": "Distance of the path from the start node to the end node in meters. Optional: This value is used by line-guided mobile robots to decrease their speed before reaching a stop position.",
+                    "unit": "m"
+                },
+                "corridor": {
+                    "$ref": "#/definitions/corridor"
+                },
+                "actions": {
+                    "description": "Array of action objects with detailed information.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/action"
+                    }
+                }
+            }
+        },
+        "corridor": {
+            "description": "Definition of boundaries in which a mobile robot can deviate from its trajectory, e. g. to avoid obstacles.",
+            "type": "object",
+            "required": [
+                "leftWidth",
+                "rightWidth"
+            ],
+            "properties": {
+                "leftWidth": {
+                    "type": "number",
+                    "description": "Defines the width of the corridor in meters to the left related to the trajectory of the mobile robot.",
+                    "unit": "m",
+                    "minimum": 0.0
+                },
+                "rightWidth": {
+                    "type": "number",
+                    "description": "Defines the width of the corridor in meters to the right related to the trajectory of the mobile robot.",
+                    "unit": "m",
+                    "minimum": 0.0
+                },
+                "corridorReferencePoint": {
+                    "type": "string",
+                    "description": "Defines whether the boundaries are valid for the kinematic center or the contour of the mobile robot.",
+                    "enum": [
+                        "KINEMATIC_CENTER",
+                        "CONTOUR"
+                    ]
+                },
+                "releaseRequired": {
+                    "type": "boolean",
+                    "description": "Optional flag that indicates if the robot must request approval from the fleet control. If not defined, no release is required."
+                },
+                "releaseLossBehavior": {
+                    "type": "string",
+                    "description": "Defines how the robot shall behave in case its release of a corridor expires or gets revoked by the fleet control. Default: STOP",
+                    "enum": [
+                        "STOP",
+                        "RETURN"
+                    ]
+                }
+            }
+        },
+        "map": {
+            "type": "object",
+            "title": "map",
+            "required": [
+                "mapId",
+                "mapVersion",
+                "mapStatus"
+            ],
+            "properties": {
+                "mapId": {
+                    "type": "string",
+                    "description": "ID of the map describing a defined area of the mobile robot's workspace."
+                },
+                "mapVersion": {
+                    "type": "string",
+                    "description": "Version of the map."
+                },
+                "mapDescriptor": {
+                    "type": "string",
+                    "description": "A user-defined, human-readable name or descriptor"
+                },
+                "mapStatus": {
+                    "type": "string",
+                    "description": "Information on the status of the map indicating, if a map version is currently used on the mobile robot. ENABLED: Indicates this map is currently active / used on the mobile robot. At most one map with the same mapId can have its status set to ENABLED.<br>DISABLED: Indicates this map version is currently not enabled on the mobile robot and thus could be enabled or deleted by request.",
+                    "enum": [
+                        "ENABLED",
+                        "DISABLED"
+                    ]
+                }
+            }
+        },
+        "nodeState": {
+            "type": "object",
+            "title": "nodeState",
+            "required": [
+                "nodeId",
+                "sequenceId",
+                "released"
+            ],
+            "properties": {
+                "nodeId": {
+                    "type": "string",
+                    "description": "Unique node identification"
+                },
+                "sequenceId": {
+                    "type": "integer",
+                    "description": "Sequence ID to discern multiple nodes with same nodeId."
+                },
+                "nodeDescriptor": {
+                    "type": "string",
+                    "description": "A user-defined, human-readable name or descriptor."
+                },
+                "released": {
+                    "type": "boolean",
+                    "description": "True: indicates that the node is part of the base. False: indicates that the node is part of the horizon."
+                },
+                "nodePosition": {
+                    "type": "object",
+                    "description": "Node position. Optional: Fleet control has this information. Can be sent additionally, e.g., for debugging purposes. ",
+                    "required": [
+                        "x",
+                        "y",
+                        "mapId"
+                    ],
+                    "properties": {
+                        "x": {
+                            "type": "number"
+                        },
+                        "y": {
+                            "type": "number"
+                        },
+                        "theta": {
+                            "type": "number",
+                            "unit": "rad",
+                            "minimum": -3.14159265359,
+                            "maximum": 3.14159265359
+                        },
+                        "mapId": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "edgeState": {
+            "type": "object",
+            "required": [
+                "edgeId",
+                "sequenceId",
+                "released"
+            ],
+            "properties": {
+                "edgeId": {
+                    "type": "string",
+                    "description": "Unique edge identification"
+                },
+                "sequenceId": {
+                    "type": "integer",
+                    "description": "Sequence ID to differentiate between multiple edges with the same edgeId"
+                },
+                "edgeDescriptor": {
+                    "type": "string",
+                    "description": "A user-defined, human-readable name or descriptor."
+                },
+                "released": {
+                    "type": "boolean",
+                    "description": "True indicates that the edge is part of the base. False indicates that the edge is part of the horizon."
+                },
+                "trajectory": {
+                    "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/trajectory",
+                    "description": "Reports the trajectory that has been defined a priori within a layout or was sent for this edge as part of the order."
+                }
+            }
+        },
+        "load": {
+            "type": "object",
+            "required": [],
+            "description": "Load object that describes the load if the mobile robot has information about it.",
+            "title": "load",
+            "properties": {
+                "loadId": {
+                    "type": "string",
+                    "description": "Unique identification number of the load (e.g., barcode or RFID). Empty field, if the mobile robot can identify the load, but did not identify the load yet. Optional, if the mobile robot cannot identify the load."
+                },
+                "loadType": {
+                    "type": "string",
+                    "description": "Type of load."
+                },
+                "loadPosition": {
+                    "type": "string",
+                    "description": "Indicates, which load handling/carrying unit of the mobile robot is used, e.g., in case the mobile robot has multiple spots/positions to carry loads. Optional for vehicles with only one loadPosition.",
+                    "examples": [
+                        "front",
+                        "back",
+                        "positionC1"
+                    ]
+                },
+                "boundingBoxReference": {
+                    "type": "object",
+                    "required": [
+                        "x",
+                        "y",
+                        "z"
+                    ],
+                    "description": "Point of reference for the location of the bounding box. The point of reference is always the center of the bounding box bottom surface (at height = 0) and is described in coordinates of the mobile robot coordinate system.",
+                    "properties": {
+                        "x": {
+                            "type": "number"
+                        },
+                        "y": {
+                            "type": "number"
+                        },
+                        "z": {
+                            "type": "number"
+                        },
+                        "theta": {
+                            "type": "number",
+                            "description": "Orientation of the loads bounding box. Important for tugger, trains, etc."
+                        }
+                    }
+                },
+                "loadDimensions": {
+                    "type": "object",
+                    "required": [
+                        "length",
+                        "width"
+                    ],
+                    "description": "Dimensions of the loads bounding box in meters.",
+                    "properties": {
+                        "length": {
+                            "type": "number",
+                            "description": "Absolute length (along the mobile robot\u2019s coordinate system's x-axis) of the load's bounding box in meters.",
+                            "unit": "m",
+                            "minimum": 0.0
+                        },
+                        "width": {
+                            "type": "number",
+                            "description": "Absolute width (along the mobile robot\u2019s coordinate system's y-axis) of the load's bounding box in meters.",
+                            "unit": "m",
+                            "minimum": 0.0
+                        },
+                        "height": {
+                            "type": "number",
+                            "description": "Absolute height of the loads bounding box in meter.\nOptional:\nset value only if known.",
+                            "unit": "m",
+                            "minimum": 0.0
+                        }
+                    }
+                },
+                "weight": {
+                    "type": "number",
+                    "description": "Absolute weight of the load measured in kg.",
+                    "unit": "kg",
+                    "minimum": 0.0
+                }
+            }
+        },
+        "zoneRequest": {
+            "type": "object",
+            "description": "Zone information sent by the mobile robot to fleet control.",
+            "required": [
+                "requestId",
+                "requestType",
+                "zoneId",
+                "zoneSetId",
+                "requestStatus"
+            ],
+            "properties": {
+                "requestId": {
+                    "type": "string",
+                    "description": "Unique per mobile robot identifier within all active requests."
+                },
+                "requestType": {
+                    "type": "string",
+                    "enum": [
+                        "ACCESS",
+                        "REPLANNING"
+                    ],
+                    "description": "Enum specifying the type of zone the request relates to. Feasible values are ACCESS or REPLANNING."
+                },
+                "zoneId": {
+                    "type": "string",
+                    "description": "Locally (within the zone set) unique identifier referencing the zone the request is related to."
+                },
+                "zoneSetId": {
+                    "type": "string",
+                    "description": "Due to the zoneId only being unique to a zoneSet, the zoneSetId is part of the request."
+                },
+                "requestStatus": {
+                    "type": "string",
+                    "enum": [
+                        "REQUESTED",
+                        "GRANTED",
+                        "REVOKED",
+                        "EXPIRED"
+                    ],
+                    "description": "When stating a request, this is set to REQUESTED. After response or update from fleet control set to GRANTED or REVOKED. If lease time expires, shall be to EXPIRED."
+                },
+                "trajectory": {
+                    "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/trajectory"
+                }
+            }
+        },
+        "edgeRequest": {
+            "type": "object",
+            "description": "Edge request information sent by the mobile robot to fleet control.",
+            "required": [
+                "requestId",
+                "requestType",
+                "edgeId",
+                "sequenceId",
+                "requestStatus"
+            ],
+            "properties": {
+                "requestId": {
+                    "type": "string",
+                    "description": "Unique per mobile robot identifier across all active requests."
+                },
+                "requestType": {
+                    "type": "string",
+                    "enum": [
+                        "CORRIDOR"
+                    ],
+                    "description": "Enum specifying the type of edge the request relates to."
+                },
+                "edgeId": {
+                    "type": "string",
+                    "description": "Globally unique identifier referencing the edge the request is related to."
+                },
+                "sequenceId": {
+                    "type": "integer",
+                    "description": "Tracking number for sequence of edge within order. Required to uniquely identify the referenced edge within the order."
+                },
+                "requestStatus": {
+                    "type": "string",
+                    "enum": [
+                        "REQUESTED",
+                        "GRANTED",
+                        "REVOKED",
+                        "EXPIRED"
+                    ],
+                    "description": "When stating a request, this is set to REQUESTED. After response or update from fleet control set to GRANTED or REVOKED. If lease time expires set to EXPIRED."
+                }
+            }
+        },
+        "actionState": {
+            "type": "object",
+            "required": [
+                "actionId",
+                "actionStatus"
+            ],
+            "title": "actionState",
+            "properties": {
+                "actionId": {
+                    "type": "string",
+                    "description": "Unique actionId",
+                    "examples": [
+                        "blink_123jdaimoim234"
+                    ]
+                },
+                "actionType": {
+                    "type": "string",
+                    "description": "actionType of the action. Optional: Only for informational or visualization purposes. Order knows the type."
+                },
+                "actionDescriptor": {
+                    "type": "string",
+                    "description": "A user-defined, human-readable name or descriptor."
+                },
+                "actionStatus": {
+                    "type": "string",
+                    "description": "WAITING: waiting for the trigger (passing the mode, entering the edge); INITIALIZING: Action was triggered, preparatory measures are initiated; RUNNING: The action is running; RETRIABLE: Actions that failed, but can be retried; PAUSED: paused by instantAction or external trigger; FINISHED: The action is finished; FAILED: action could not be performed.",
+                    "enum": [
+                        "WAITING",
+                        "INITIALIZING",
+                        "RUNNING",
+                        "PAUSED",
+                        "RETRIABLE",
+                        "FINISHED",
+                        "FAILED"
+                    ]
+                },
+                "actionResult": {
+                    "type": "string",
+                    "description": "Description of the result, e.g., the result of a RFID-read. Errors will be transmitted in errors."
+                }
+            }
+        },
+        "powerSupply": {
+            "type": "object",
+            "required": [
+                "stateOfCharge",
+                "charging"
+            ],
+            "description": "Contains all battery-related information.",
+            "properties": {
+                "stateOfCharge": {
+                    "type": "number",
+                    "description": "State of Charge in %: If mobile robot only provides values for good or bad battery levels, these will be indicated as 20% (bad) and 80% (good).",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                "batteryVoltage": {
+                    "type": "number",
+                    "description": "Battery voltage"
+                },
+                "batteryCurrent": {
+                    "type": "number",
+                    "description": "Battery current in Ampere (A)"
+                },
+                "batteryHealth": {
+                    "type": "number",
+                    "description": "State of health in percent.",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                "charging": {
+                    "type": "boolean",
+                    "description": "True: charging in progress. False: mobile robot is currently not charging."
+                },
+                "range": {
+                    "type": "number",
+                    "description": "Estimated reach with current State of Charge in meter.",
+                    "minimum": 0
+                }
+            }
+        },
+        "error": {
+            "type": "object",
+            "required": [
+                "errorType",
+                "errorLevel"
+            ],
+            "title": "Error",
+            "properties": {
+                "errorType": {
+                    "type": "string",
+                    "description": "Error type, extensible enumeration including the following predefined values."
+                },
+                "errorReferences": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "title": "errorReference",
+                        "description": "Array of references (e.g. nodeId, edgeId, orderId, actionId, etc.) to provide more information related to the error.",
+                        "properties": {
+                            "referenceKey": {
+                                "type": "string",
+                                "description": "Specifies the type of reference used (e.g. nodeId, edgeId, orderId, actionId, etc.)."
+                            },
+                            "referenceValue": {
+                                "type": "string",
+                                "description": "The value that belongs to the reference key. For example, the id of the node where the error occurred."
+                            }
+                        },
+                        "required": [
+                            "referenceKey",
+                            "referenceValue"
+                        ]
+                    }
+                },
+                "errorDescription": {
+                    "type": "string",
+                    "description": "Verbose description providing details and possible causes of the error."
+                },
+                "errorDescriptionTranslations": {
+                    "type": "array",
+                    "description": "Array of translations of the error description.",
+                    "items": {
+                        "$ref": "#/definitions/translation"
+                    }
+                },
+                "errorHint": {
+                    "type": "string",
+                    "description": "Hint on how to approach or solve the reported error."
+                },
+                "errorHintTranslations": {
+                    "type": "array",
+                    "description": "Array of translations of the error hint.",
+                    "items": {
+                        "$ref": "#/definitions/translation"
+                    }
+                },
+                "errorLevel": {
+                    "type": "string",
+                    "description": "WARNING: No immediate attention required, mobile robot is able to continue active and accept new order. URGENT: Immediate attention required, mobile robot is able to continue active and accept new order. CRITICAL: Immediate attention required, mobile robot is unable to continue active order, but can accept new order. FATAL: User intervention is required, mobile robot is unable to continue active or accept new order.",
+                    "enum": [
+                        "WARNING",
+                        "URGENT",
+                        "CRITICAL",
+                        "FATAL"
+                    ]
+                }
+            }
+        },
+        "translation": {
+            "type": "object",
+            "title": "translation",
+            "description": "Translation of a text for a given language code.",
+            "required": [
+                "translationKey",
+                "translationValue"
+            ],
+            "properties": {
+                "translationKey": {
+                    "type": "string",
+                    "description": "Specifies the language of the translation according to ISO 639-1."
+                },
+                "translationValue": {
+                    "type": "string",
+                    "description": "Translation in language of translation key."
+                }
+            }
+        },
+        "info": {
+            "type": "object",
+            "required": [
+                "infoType",
+                "infoLevel"
+            ],
+            "properties": {
+                "infoType": {
+                    "type": "string",
+                    "description": "Type/name of information."
+                },
+                "infoReferences": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "referenceKey",
+                            "referenceValue"
+                        ],
+                        "title": "infoReference",
+                        "description": "Array of references.",
+                        "properties": {
+                            "referenceKey": {
+                                "type": "string",
+                                "description": "References the type of reference (e.g., headerId, orderId, actionId, etc.)."
+                            },
+                            "referenceValue": {
+                                "type": "string",
+                                "description": "References the value, which belongs to the reference key."
+                            }
+                        }
+                    }
+                },
+                "infoDescriptor": {
+                    "type": "string",
+                    "description": "A user-defined, human-readable name or descriptor."
+                },
+                "infoLevel": {
+                    "type": "string",
+                    "description": "DEBUG: used for debugging. INFO: used for visualization.",
+                    "enum": [
+                        "INFO",
+                        "DEBUG"
+                    ]
+                }
+            }
+        },
+        "safetyState": {
+            "type": "object",
+            "required": [
+                "activeEmergencyStop",
+                "fieldViolation"
+            ],
+            "description": "Contains all safety-related information.",
+            "properties": {
+                "activeEmergencyStop": {
+                    "type": "string",
+                    "description": "EmergencyStop-Types:  MANUAL: e-stop shall be acknowledged manually at the mobile robot. REMOTE: facility e-stop shall be acknowledged remotely. NONE: no e-stop activated.",
+                    "enum": [
+                        "MANUAL",
+                        "REMOTE",
+                        "NONE"
+                    ]
+                },
+                "fieldViolation": {
+                    "type": "boolean",
+                    "description": "Protective field violation. True: field is violated. False: field is not violated."
+                }
+            }
+        },
+        "zoneSetStatus": {
+            "type": "object",
+            "title": "zoneSet",
+            "required": [
+                "zoneSetId",
+                "mapId",
+                "zoneSetStatus"
+            ],
+            "properties": {
+                "zoneSetId": {
+                    "type": "string",
+                    "description": "Unique identifier of the zone set that is currently enabled for the map.<br> This field shall be left empty only if the mobile robot has no zones defined for the corresponding map."
+                },
+                "mapId": {
+                    "type": "string",
+                    "description": "Identifier of the corresponding map."
+                },
+                "zoneSetStatus": {
+                    "type": "string",
+                    "description": "ENABLED: Indicates this zone set is currently active / used on the mobile robot. At most one zone set for each map can have its status set to ENABLED. DISABLED: Indicates this zone set is currently not enabled on the mobile robot and thus could be enabled or deleted by fleet control.",
+                    "enum": [
+                        "ENABLED",
+                        "DISABLED"
+                    ]
+                }
+            }
+        },
+        "zoneSet": {
+            "type": "object",
+            "required": [
+                "mapId",
+                "zoneSetId",
+                "zones"
+            ],
+            "properties": {
+                "mapId": {
+                    "type": "string",
+                    "description": "Globally unique identifier of the map the zone set particularizes."
+                },
+                "zoneSetId": {
+                    "type": "string",
+                    "description": "Globally unique identifier of the zone set."
+                },
+                "zoneSetDescriptor": {
+                    "type": "string",
+                    "description": "A user-defined, human-readable name or descriptor."
+                },
+                "zones": {
+                    "type": "array",
+                    "description": "Array of zone objects.",
+                    "items": {
+                        "$ref": "#/definitions/zone"
+                    }
+                }
+            }
+        },
+        "zone": {
+            "type": "object",
+            "required": [
+                "zoneId",
+                "zoneType",
+                "vertices"
+            ],
+            "properties": {
+                "zoneId": {
+                    "type": "string",
+                    "description": "Locally (within the zone set) unique identifier."
+                },
+                "zoneType": {
+                    "type": "string",
+                    "description": "Zone category.",
+                    "enum": [
+                        "BLOCKED",
+                        "LINE_GUIDED",
+                        "RELEASE",
+                        "COORDINATED_REPLANNING",
+                        "SPEED_LIMIT",
+                        "ACTION",
+                        "PRIORITY",
+                        "PENALTY",
+                        "DIRECTED",
+                        "BIDIRECTED"
+                    ]
+                },
+                "zoneDescriptor": {
+                    "type": "string",
+                    "description": "User-defined human-readable name or descriptor."
+                },
+                "vertices": {
+                    "type": "array",
+                    "description": "Array of vertices (in x-y-coordinates) defining the geometrical shape of the zone.",
+                    "minItems": 3,
+                    "items": {
+                        "$ref": "#/definitions/vertex"
+                    }
+                }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "zoneType": {
+                                "const": "SPEED_LIMIT"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "maximumSpeed"
+                        ],
+                        "properties": {
+                            "maximumSpeed": {
+                                "type": "number",
+                                "description": "Required in SPEED_LIMIT zone."
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "zoneType": {
+                                "const": "ACTION"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "entryActions",
+                            "duringActions",
+                            "exitActions"
+                        ],
+                        "properties": {
+                            "entryActions": {
+                                "type": "array",
+                                "description": "Array of actions to be executed when entering the zone.",
+                                "items": {
+                                    "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/action"
+                                }
+                            },
+                            "duringActions": {
+                                "type": "array",
+                                "description": "Actions to be executed while crossing the zone. Empty Array, if no Actions required.",
+                                "items": {
+                                    "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/action"
+                                }
+                            },
+                            "exitActions": {
+                                "type": "array",
+                                "description": "Actions to be triggered when leaving the zone. Empty Array, if no Actions required.",
+                                "items": {
+                                    "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/action"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "zoneType": {
+                                "const": "PRIORITY"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "priorityFactor"
+                        ],
+                        "properties": {
+                            "priorityFactor ": {
+                                "type": "number",
+                                "description": "Relative factor, determining the zone's preference over an area with no zone. 0.0 means no preference, as if there was no zone, 1.0 is maximum preference.",
+                                "minimum": 0.0,
+                                "maximum": 1.0
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "zoneType": {
+                                "const": "PENALTY"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "penaltyFactor"
+                        ],
+                        "properties": {
+                            "penaltyFactor ": {
+                                "type": "number",
+                                "description": "Relative factor, determining the zone's penalty over an area with no zone. 0.0 means no penalty, as if there was no zone, 1.0 is the maximum penalty, causing the mobile robot to take this path only if no other path is possible.",
+                                "minimum": 0.0,
+                                "maximum": 1.0
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "zoneType": {
+                                "const": "DIRECTED"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "direction",
+                            "limitation"
+                        ],
+                        "properties": {
+                            "direction": {
+                                "type": "number",
+                                "description": "Preferred direction of travel within the zone in radians. The direction of travel is the speed vector in the project-specific coordinate system.",
+                                "unit": "rad"
+                            },
+                            "limitation": {
+                                "type": "string",
+                                "description": "SOFT: Mobile robots may deviate from the defined direction of travel, but should avoid it, RESTRICTED: The mobile robot may deviate from the defined direction of travel, e.g., for obstacle avoidance, but shall never traverse opposite to the defined direction of travel, STRICT: The mobile robot shall not deviate from the defined direction of travel (within its precision).",
+                                "enum": [
+                                    "SOFT",
+                                    "RESTRICTED",
+                                    "STRICT"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "zoneType": {
+                                "const": "BIDIRECTED"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "direction",
+                            "limitation"
+                        ],
+                        "properties": {
+                            "direction": {
+                                "type": "number",
+                                "description": "Direction and its opposite direction (+ Pi) define the allowed directions of travel within the zone in radians. The direction of travel is the speed vector in the project-specific coordinate system."
+                            },
+                            "limitation": {
+                                "type": "string",
+                                "description": "SOFT: Mobile robots may deviate from the defined directions of travel, but should avoid it, RESTRICTED: The mobile robot should not traverse in any other direction than the directions of travel, except for obstacle avoidance.",
+                                "enum": [
+                                    "SOFT",
+                                    "RESTRICTED"
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "vertex": {
+            "type": "object",
+            "required": [
+                "x",
+                "y"
+            ],
+            "properties": {
+                "x": {
+                    "type": "number",
+                    "description": "X-coordinate described in the project specific coordinate system.",
+                    "unit": "m"
+                },
+                "y": {
+                    "type": "number",
+                    "description": "Y-coordinate described in the project specific coordinate system.",
+                    "unit": "m"
+                }
+            }
+        },
+        "actionParameter": {
+            "type": "object",
+            "required": [
+                "key",
+                "value"
+            ],
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "description": "The key of the action parameter.",
+                    "examples": [
+                        "duration",
+                        "direction",
+                        "signal"
+                    ]
+                },
+                "value": {
+                    "type": [
+                        "array",
+                        "boolean",
+                        "number",
+                        "integer",
+                        "string",
+                        "object"
+                    ],
+                    "description": "The value of the action parameter",
+                    "examples": [
+                        103.2,
+                        "left",
+                        true,
+                        [
+                            "arrays",
+                            "are",
+                            "also",
+                            "valid"
+                        ],
+                        {
+                            "objects": "as",
+                            "well": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "$id": "http://vda-5050-schema.org/v3.0/common.schema.json"
+}
