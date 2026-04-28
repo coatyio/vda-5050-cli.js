@@ -1,0 +1,222 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "state",
+    "description": "State of the mobile robot.",
+    "subtopic": "/state",
+    "type": "object",
+    "required": [
+        "headerId",
+        "timestamp",
+        "version",
+        "manufacturer",
+        "serialNumber",
+        "orderId",
+        "orderUpdateId",
+        "lastNodeId",
+        "lastNodeSequenceId",
+        "nodeStates",
+        "edgeStates",
+        "driving",
+        "actionStates",
+        "instantActionStates",
+        "powerSupply",
+        "operatingMode",
+        "errors",
+        "safetyState"
+    ],
+    "properties": {
+        "headerId": {
+            "type": "integer",
+            "description": "headerId of the message. The headerId is defined per topic and incremented by 1 with each sent (but not necessarily received) message."
+        },
+        "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO8601 format (YYYY-MM-DDTHH:mm:ss.fffZ).",
+            "examples": [
+                "1991-03-11T11:40:03.123Z"
+            ]
+        },
+        "version": {
+            "type": "string",
+            "description": "Version of the protocol [Major].[Minor].[Patch]",
+            "examples": [
+                "1.3.2"
+            ]
+        },
+        "manufacturer": {
+            "type": "string",
+            "description": "Manufacturer of the mobile robot"
+        },
+        "serialNumber": {
+            "type": "string",
+            "description": "Serial number of the mobile robot."
+        },
+        "maps": {
+            "type": "array",
+            "description": "Array of map-objects that are currently stored on the mobile robot.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/map"
+            }
+        },
+        "zoneSets": {
+            "type": "array",
+            "description": "Array of zoneSet objects that are currently stored on the mobile robot.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/zoneSetStatus"
+            }
+        },
+        "orderId": {
+            "type": "string",
+            "description": "Unique order identification of the current order or the previous finished order. The orderId is kept until a new order is received. Empty string (\"\") if no previous orderId is available. "
+        },
+        "orderUpdateId": {
+            "type": "integer",
+            "description": "Order Update Identification to identify that an order update has been accepted by the mobile robot. 0 if no previous orderUpdateId is available."
+        },
+        "lastNodeId": {
+            "type": "string",
+            "description": "Node ID of last reached node or, if mobile robot is currently on a node, current node (e.g., \"node7\"). Empty string (\"\") if no lastNodeId is available."
+        },
+        "lastNodeSequenceId": {
+            "type": "integer",
+            "description": "sequenceId of the last reached node or, if the mobile robot is currently on a node, sequenceId of current node. 0 if no lastNodeSequenceId is available. "
+        },
+        "nodeStates": {
+            "type": "array",
+            "description": "Array of nodeState-Objects, that need to be traversed for fulfilling the order. Empty list if idle.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/nodeState"
+            }
+        },
+        "edgeStates": {
+            "type": "array",
+            "description": "Array of edgeState-Objects, that need to be traversed for fulfilling the order, empty list if idle.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/edgeState"
+            }
+        },
+        "plannedPath": {
+            "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/plannedPath"
+        },
+        "intermediatePath": {
+            "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/intermediatePath"
+        },
+        "mobileRobotPosition": {
+            "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/mobileRobotPosition"
+        },
+        "velocity": {
+            "type": "object",
+            "description": "The mobile robot's velocity in mobile robot coordinates",
+            "properties": {
+                "vx": {
+                    "type": "number",
+                    "description": "The mobile robot's velocity in its x direction",
+                    "unit": "m/s"
+                },
+                "vy": {
+                    "type": "number",
+                    "description": "The mobile robot's velocity in its y direction",
+                    "unit": "m/s"
+                },
+                "omega": {
+                    "type": "number",
+                    "description": "The mobile robot's turning speed around its z axis.",
+                    "unit": "rad/s"
+                }
+            }
+        },
+        "loads": {
+            "type": "array",
+            "description": "Loads, that are currently handled by the mobile robot. Optional: If mobile robot cannot determine load state, leave the array out of the state. If the mobile robot can determine the load state, but the array is empty, the mobile robot is considered unloaded.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/load"
+            }
+        },
+        "driving": {
+            "type": "boolean",
+            "description": "True: indicates that the mobile robot is driving and/or rotating. Other movements of the mobile robot (e.g., lift movements) are not included here.\nFalse: indicates that the mobile robot is neither driving nor rotating "
+        },
+        "paused": {
+            "type": "boolean",
+            "description": "True: mobile robot is currently in a paused state, either because of the push of a physical button on the mobile robot or because of an instantAction. The mobile robot can resume the order.\nFalse: The mobile robot is currently not in a paused state."
+        },
+        "newBaseRequest": {
+            "type": "boolean",
+            "description": "True: mobile robot is almost at the end of the base and will reduce speed if no new base is transmitted. Trigger for fleet control to send new base\nFalse: no base update required."
+        },
+        "zoneRequests": {
+            "description": "Array of zoneRequest objects that are currently active on the mobile robot. Empty array if no zone requests are active.",
+            "type": "array",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/zoneRequest"
+            }
+        },
+        "edgeRequests": {
+            "description": "Array of edgeRequest objects that are currently active on the mobile robot. Empty array if no edge requests are active.",
+            "type": "array",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/edgeRequest"
+            }
+        },
+        "distanceSinceLastNode": {
+            "type": "number",
+            "description": "Used by line guided vehicles to indicate the distance it has been driving past the lastNodeId. Distance is in meters."
+        },
+        "actionStates": {
+            "type": "array",
+            "description": "Array of the current actions and the actions which are yet to be finished. This may include actions from previous nodes that are still in progress\nWhen an action is completed, an updated state message is published with actionStatus set to finished and if applicable with the corresponding resultDescriptor. The actionStates are kept until a new order is received.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/actionState"
+            }
+        },
+        "instantActionStates": {
+            "type": "array",
+            "description": "Array of all instant action states that the mobile robot received. Empty array if the mobile robot has not received any instant actions. Instant actions are kept in the state until restart or action clearInstantActions is executed.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/actionState"
+            }
+        },
+        "zoneActionStates": {
+            "type": "array",
+            "description": "Array of all zone actions that are in an end state or are currently running; sharing upcoming actions is optional. Zone action states are kept in the state message until restart or action clearZoneActions is executed.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/actionState"
+            }
+        },
+        "powerSupply": {
+            "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/powerSupply"
+        },
+        "operatingMode": {
+            "type": "string",
+            "description": "Current operating mode of the mobile robot.",
+            "enum": [
+                "STARTUP",
+                "AUTOMATIC",
+                "SEMIAUTOMATIC",
+                "INTERVENED",
+                "MANUAL",
+                "SERVICE",
+                "TEACH_IN"
+            ]
+        },
+        "errors": {
+            "type": "array",
+            "description": "Array of error-objects. All active errors of the mobile robot should be in the list. An empty array indicates that the mobile robot has no active errors.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/error"
+            }
+        },
+        "information": {
+            "type": "array",
+            "description": "Array of info-objects. An empty array indicates, that the mobile robot has no information. This should only be used for visualization or debugging \u2013 it must not be used for logic in fleet control.",
+            "items": {
+                "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/info"
+            }
+        },
+        "safetyState": {
+            "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/safetyState"
+        }
+    },
+    "$id": "http://vda-5050-schema.org/v3.0/state.schema.json"
+}

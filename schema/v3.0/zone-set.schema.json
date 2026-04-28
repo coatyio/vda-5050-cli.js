@@ -1,0 +1,48 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "zoneSet",
+    "description": "Zone set detailing a dedicated map.",
+    "subtopic": "/zoneSet",
+    "type": "object",
+    "required": [
+        "headerId",
+        "timestamp",
+        "version",
+        "manufacturer",
+        "serialNumber",
+        "zoneSet"
+    ],
+    "properties": {
+        "headerId": {
+            "type": "integer",
+            "description": "headerId of the message. The headerId is defined per topic and incremented by 1 with each sent (but not necessarily received) message."
+        },
+        "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO8601 format (YYYY-MM-DDTHH:mm:ss.fffZ).",
+            "examples": [
+                "1991-03-11T11:40:03.123Z"
+            ]
+        },
+        "version": {
+            "type": "string",
+            "description": "Version of the protocol [Major].[Minor].[Patch]",
+            "examples": [
+                "1.3.2"
+            ]
+        },
+        "manufacturer": {
+            "type": "string",
+            "description": "Manufacturer of the mobile robot."
+        },
+        "serialNumber": {
+            "type": "string",
+            "description": "Serial number of the mobile robot."
+        },
+        "zoneSet": {
+            "$ref": "http://vda-5050-schema.org/v3.0/common.schema.json#/definitions/zoneSet"
+        }
+    },
+    "$id": "http://vda-5050-schema.org/v3.0/zone-set.schema.json"
+}
